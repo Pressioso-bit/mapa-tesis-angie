@@ -1582,7 +1582,14 @@ function select(id){
   `;
   det.style.display="block";
   det.scrollTop=0;
-  map.flyTo([ev.lat,ev.lng],Math.max(map.getZoom(),14.5),{duration:0.65});
+  const pt=L.latLng(ev.lat,ev.lng);
+  if(!map.getBounds().contains(pt)){
+    map.flyTo(pt,Math.max(map.getZoom(),13),{duration:0.55,easeLinearity:0.5});
+  } else if(map.getZoom()<13){
+    map.flyTo(pt,13,{duration:0.45,easeLinearity:0.5});
+  } else {
+    map.panTo(pt,{animate:true,duration:0.3});
+  }
 }
 
 document.querySelectorAll(".chip[data-tipo]").forEach(c=>c.addEventListener("click",()=>{
@@ -1773,11 +1780,11 @@ if(new URLSearchParams(location.search).has("presentacion")){
   document.getElementById("sidebar").style.minWidth="220px";
 }
 
-// ── Intro fly-through on load ─────────────────────────
+// ── Fit all markers on load ───────────────────────────
 setTimeout(()=>{
-  map.flyTo([-33.56,-70.65],11,{duration:2.2,easeLinearity:0.25});
-  setTimeout(()=>map.flyTo([-33.43,-70.61],12,{duration:1.8,easeLinearity:0.3}),2400);
-},600);
+  const pts=eventos.map(e=>L.latLng(e.lat,e.lng));
+  if(pts.length) map.fitBounds(L.latLngBounds(pts),{padding:[40,40],maxZoom:13,animate:false});
+},300);
 
 </script>
 </body>
