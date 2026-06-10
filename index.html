@@ -924,8 +924,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
   .tl-dot.active { background:var(--amber); transform:scale(1.4); }
   .tl-dot:hover { background:rgba(196,154,42,.5); }
-  #map-wrap { position:relative; flex:1; display:flex; flex-direction:column; min-height:0; overflow:hidden; }
-  #map { flex:1; }
+  #map-wrap { position:relative; flex:1; display:flex; flex-direction:column; min-height:0; }
+  #map { flex:1; overflow:hidden; }
 
   /* ── Colectivo panel ── */
   #col-panel {
@@ -1123,25 +1123,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   <div id="map-container">
     <div id="map-wrap">
-  <div id="map"></div>
-  <button id="fs-btn" title="Pantalla completa" onclick="(()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen();this.textContent='⊡'}else{document.exitFullscreen();this.textContent='⛶'}})()">⛶</button>
-  <div id="ruta-btn" style="display:none"></div>
-  <div id="timeline-bar">
-    <span class="tl-label">AÑO</span>
-    <div id="tl-dots"></div>
-    <input type="range" id="tl-slider" min="0" max="7" step="1" value="0">
-    <div class="tl-year-display" id="tl-year-disp">Todos</div>
-    <button id="tl-all-btn">Ver todo</button>
-  </div>
-  <div id="col-panel">
-    <button id="col-panel-close">×</button>
-    <div class="col-panel-name" id="col-panel-name"></div>
-    <div class="col-panel-desc" id="col-panel-desc"></div>
-    <div class="col-panel-stats" id="col-panel-stats"></div>
-    <div class="col-panel-evs" id="col-panel-evs"></div>
-  </div>
-</div>
-    <div id="detail"></div>
+      <div id="map"></div>
+      <button id="fs-btn" title="Pantalla completa" onclick="(()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen();this.textContent='⊡'}else{document.exitFullscreen();this.textContent='⛶'}})()">⛶</button>
+      <div id="ruta-btn" style="display:none"></div>
+      <div id="timeline-bar">
+        <span class="tl-label">AÑO</span>
+        <div id="tl-dots"></div>
+        <input type="range" id="tl-slider" min="0" max="7" step="1" value="0">
+        <div class="tl-year-display" id="tl-year-disp">Todos</div>
+        <button id="tl-all-btn">Ver todo</button>
+      </div>
+      <div id="col-panel">
+        <button id="col-panel-close">×</button>
+        <div class="col-panel-name" id="col-panel-name"></div>
+        <div class="col-panel-desc" id="col-panel-desc"></div>
+        <div class="col-panel-stats" id="col-panel-stats"></div>
+        <div class="col-panel-evs" id="col-panel-evs"></div>
+      </div>
+      <div id="detail"></div>
+    </div>
   </div>
 </div>
 
