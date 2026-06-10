@@ -864,7 +864,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .leaflet-control-attribution { background:rgba(10,10,10,0.8) !important; color:rgba(237,232,223,0.4) !important; font-size:9px !important; }
   .leaflet-control-attribution a { color:rgba(196,154,42,0.6) !important; }
   .leaflet-control-zoom a { background:var(--surface2) !important; color:var(--text) !important; border-color:var(--border2) !important; }
-  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(196,154,42,0.5);} 50%{box-shadow:0 0 0 8px rgba(196,154,42,0);} }
+
   @keyframes ripple-expand { 0%{transform:translate(-50%,-50%) scale(0);opacity:0.7;} 100%{transform:translate(-50%,-50%) scale(1);opacity:0;} }
   .marker-ripple { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,0.9); pointer-events:none; animation:ripple-expand 0.7s ease-out forwards; z-index:9999; }
 
@@ -991,10 +991,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   /* ── Pulse animation for active marker ── */
-  @keyframes pulse {
-    0%   { box-shadow: 0 0 0 3px rgba(196,154,42,0.4), 0 4px 16px rgba(0,0,0,0.6); }
-    50%  { box-shadow: 0 0 0 7px rgba(196,154,42,0.15), 0 4px 20px rgba(0,0,0,0.7); }
-    100% { box-shadow: 0 0 0 3px rgba(196,154,42,0.4), 0 4px 16px rgba(0,0,0,0.6); }
+  @keyframes pulse-ring {
+    0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.8; }
+    100% { transform: translate(-50%,-50%) scale(2.6); opacity: 0; }
+  }
+  .marker-pulse-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 2.5px solid currentColor;
+    animation: pulse-ring 1.8s ease-out infinite;
+    pointer-events: none;
   }
 
   /* ── Hover effect on list items ── */
@@ -1292,8 +1300,9 @@ const tipoSymbols={juntanza:"★",asamblea:"◆",feria:"●",taller:"▲",conmem
 
 function mkIcon(ev,active){
   const s=active?38:28, sym=tipoSymbols[ev.tipo]||"●";
-  const glow=active?`box-shadow:0 0 0 3px rgba(196,154,42,0.4),0 4px 16px rgba(0,0,0,0.6);animation:pulse 1.8s infinite;`:`box-shadow:0 2px 8px rgba(0,0,0,0.5);`;
-  return L.divIcon({className:"",html:`<div style="width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:${active?16:12}px;${glow}border:2px solid rgba(255,255,255,${active?0.5:0.2})">${sym}</div>`,iconSize:[s,s],iconAnchor:[s/2,s/2]});
+  const shadow=active?`box-shadow:0 0 0 2px rgba(255,255,255,0.4),0 4px 16px rgba(0,0,0,0.6);`:`box-shadow:0 2px 8px rgba(0,0,0,0.5);`;
+  const ring=active?`<div class="marker-pulse-ring" style="color:${ev.color};width:${s}px;height:${s}px;"></div>`:``;
+  return L.divIcon({className:"",html:`<div style="position:relative;width:${s}px;height:${s}px;">${ring}<div style="position:absolute;top:0;left:0;width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:${active?16:12}px;${shadow}border:2px solid rgba(255,255,255,${active?0.5:0.2})">${sym}</div></div>`,iconSize:[s,s],iconAnchor:[s/2,s/2]});
 }
 
 function visible(){
