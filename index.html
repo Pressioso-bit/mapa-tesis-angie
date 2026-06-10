@@ -799,8 +799,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   #filters { padding:10px 12px; border-bottom:1px solid var(--border2); flex-shrink:0; }
   .filter-label { font-size:9px; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:6px; font-weight:500; }
   .filter-row { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:6px; }
-  .chip { font-size:9.5px; padding:3px 9px; border-radius:20px; cursor:pointer; border:1px solid var(--border2); color:var(--muted2); background:transparent; transition:all 0.15s; user-select:none; white-space:nowrap; font-family:'Inter',sans-serif; }
-  .chip.on { color:#fff; border-color:transparent; }
+  .chip { font-size:10px; padding:4px 11px; border-radius:20px; cursor:pointer; border:1px solid var(--border2); color:var(--muted2); background:transparent; transition:all 0.18s; user-select:none; white-space:nowrap; font-family:'Inter',sans-serif; letter-spacing:0.01em; }
+  .chip:hover { border-color:rgba(255,255,255,0.25); color:var(--cream); }
+  .chip.on { color:#fff; border-color:transparent; box-shadow:0 1px 6px rgba(0,0,0,0.4); }
   .chip[data-tipo="juntanza"].on  { background:var(--juntanza); }
   .chip[data-tipo="asamblea"].on  { background:var(--asamblea); }
   .chip[data-tipo="feria"].on     { background:var(--feria); }
@@ -834,25 +835,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
   #list-wrap { flex:1; overflow-y:auto; }
   #list-wrap::-webkit-scrollbar { width:4px; }
   #list-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
-  .ev-item { padding:10px 14px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.12s; }
-  .ev-item:hover { background:var(--surface2); }
-  .ev-item.active { background:var(--surface3); border-left:3px solid var(--amber); }
+  .ev-item { padding:10px 16px; cursor:pointer; border-bottom:1px solid var(--border); transition:background 0.12s, border-left-color 0.12s; border-left:3px solid transparent; }
+  .ev-item:hover { background:var(--surface2); border-left-color:rgba(196,154,42,0.4); }
+  .ev-item.active { background:var(--surface3); border-left-color:var(--amber); }
   .ev-top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
   .ev-name { font-size:11.5px; font-weight:500; color:var(--cream); line-height:1.3; }
-  .ev-badge { font-size:8px; padding:2px 7px; border-radius:10px; white-space:nowrap; font-weight:600; flex-shrink:0; margin-top:1px; }
+  .ev-badge { font-size:8px; padding:2px 8px; border-radius:10px; white-space:nowrap; font-weight:600; flex-shrink:0; margin-top:2px; letter-spacing:0.03em; }
   .ev-meta { font-size:9.5px; color:var(--muted2); margin-top:3px; }
   .ev-colectivo { font-size:9px; color:var(--muted); margin-top:2px; font-style:italic; }
   .sent-dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; vertical-align:middle; }
 
   /* DETAIL */
-  #detail { position:absolute; bottom:20px; right:20px; width:300px; max-height:70vh; overflow-y:auto; background:var(--surface); border:1px solid var(--border2); border-radius:10px; z-index:500; box-shadow:0 8px 32px rgba(0,0,0,0.6); }
+  #detail { position:absolute; bottom:80px; right:16px; width:310px; max-height:68vh; overflow-y:auto; background:rgba(17,17,17,0.97); border:1px solid var(--border2); border-radius:12px; z-index:500; box-shadow:0 12px 40px rgba(0,0,0,0.75); backdrop-filter:blur(10px); }
   #detail::-webkit-scrollbar { width:3px; }
   #detail::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
-  .det-photo { width:100%; height:160px; object-fit:cover; border-radius:9px 9px 0 0; display:block; }
-  .det-body { padding:14px; }
-  .det-tipo { font-size:8.5px; letter-spacing:0.15em; text-transform:uppercase; font-weight:600; margin-bottom:5px; }
-  .det-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; line-height:1.2; color:var(--cream); margin-bottom:8px; }
-  .det-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+  .det-photo { width:100%; height:170px; object-fit:cover; border-radius:11px 11px 0 0; display:block; }
+  .det-body { padding:16px; }
+  .det-tipo { font-size:9px; letter-spacing:0.16em; text-transform:uppercase; font-weight:700; margin-bottom:6px; }
+  .det-title { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:700; line-height:1.2; color:var(--cream); margin-bottom:10px; }
+  .det-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; background:var(--surface2); border-radius:8px; padding:10px; }
   .det-field-l { font-size:8px; text-transform:uppercase; letter-spacing:0.10em; color:var(--muted); margin-bottom:2px; }
   .det-field-v { font-size:10.5px; color:var(--cream); }
   .det-sent { display:flex; align-items:center; gap:6px; padding:7px 10px; border-radius:6px; background:var(--surface2); margin-bottom:10px; font-size:10px; }
@@ -943,21 +944,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   /* ── Mobile layout ── */
   @media (max-width:640px){
-    #app { flex-direction:column; }
+    #app { flex-direction:column; height:100dvh; }
     #sidebar {
-      width:100% !important; min-width:unset;
-      height:45vh; border-right:none;
-      border-bottom:1px solid var(--border2);
-      flex-shrink:0;
+      width:100vw !important; min-width:0 !important; max-width:100vw !important;
+      height:44dvh; max-height:44dvh;
+      border-right:none; border-bottom:1px solid var(--border2);
+      flex-shrink:0; overflow:hidden;
+      display:flex; flex-direction:column;
     }
-    #header-img-strip { height:70px; }
-    .hdr-title { font-size:16px; }
+    #header-img-strip { height:60px; }
+    .hdr-title { font-size:15px; }
+    .hdr-sub, .hdr-tagline { display:none; }
+    #stats { flex-shrink:0; }
     #stats .stat-n { font-size:14px; }
-    #map-container { flex:1; min-height:0; }
-    #ev-list { max-height:none; }
-    #filters { padding:8px 10px; }
+    #filters { padding:6px 10px; flex-shrink:0; }
     .chip { font-size:9px; padding:2px 7px; }
-    #fs-btn { top:8px; right:8px; }
+    #list-wrap { flex:1; min-height:0; overflow-y:auto; }
+    #map-container { flex:1; min-height:0; height:56dvh; }
+    #map-wrap { height:100%; }
+    #detail { bottom:10px; right:10px; left:10px; width:auto; max-height:60dvh; }
+    #fs-btn { top:8px; right:8px; width:30px; height:30px; font-size:16px; }
+    #timeline-bar { padding:0 12px; gap:8px; height:52px; }
+    #timeline-bar .tl-year-display { font-size:15px; min-width:36px; }
   }
 
   /* Colectivo chip in detail panel */
@@ -1124,10 +1132,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </div>
     <div id="detail">
       <button id="det-close">×</button>
-      <img id="det-photo" class="det-photo" src="" alt="">
+      <div style="position:relative;">
+        <img id="det-photo" class="det-photo" src="" alt="">
+        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(17,17,17,0.92) 100%);border-radius:11px 11px 0 0;"></div>
+        <div style="position:absolute;bottom:12px;left:14px;right:44px;">
+          <div class="det-tipo" id="det-tipo" style="margin-bottom:3px;"></div>
+          <div class="det-title" id="det-title" style="margin-bottom:0;font-size:17px;text-shadow:0 1px 6px rgba(0,0,0,0.8);"></div>
+        </div>
+      </div>
       <div class="det-body">
-        <div class="det-tipo" id="det-tipo"></div>
-        <div class="det-title" id="det-title"></div>
         <div class="det-grid">
           <div class="det-field"><div class="det-field-l">Fecha</div><div class="det-field-v" id="det-fecha"></div></div>
           <div class="det-field"><div class="det-field-l">Año</div><div class="det-field-v" id="det-year"></div></div>
@@ -1135,9 +1148,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <div class="det-field"><div class="det-field-l">Comuna</div><div class="det-field-v" id="det-comuna"></div></div>
         </div>
         <div class="det-sent" id="det-sent"></div>
-        <div class="det-field" style="margin-bottom:8px"><div class="det-field-l">Colectivo</div><div class="det-field-v"><span id="det-colectivo" class="col-link"></span></div></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;border-radius:6px;background:var(--surface2);">
+          <div class="det-field-l" style="margin:0;white-space:nowrap;">Colectivo</div>
+          <span id="det-colectivo" class="col-link" style="font-size:11px;font-weight:500;"></span>
+        </div>
         <div class="det-desc" id="det-desc"></div>
-        <div id="det-marco" style="display:none;margin-top:10px;padding:7px 10px;border-radius:6px;border-left:3px solid;font-size:10px;line-height:1.45;"></div>
+        <div id="det-marco" style="display:none;margin-top:10px;padding:8px 12px;border-radius:8px;border-left:3px solid;font-size:10px;line-height:1.5;"></div>
         <div class="det-keywords" id="det-kw"></div>
       </div>
     </div>
@@ -1434,6 +1450,8 @@ function select(id){
   const ev=eventos.find(e=>e.id===activeId);
   const det=document.getElementById("detail");
   if(!ev){det.classList.remove("show");render();return;}
+  det.style.borderTopColor=ev.color;
+  det.style.borderTopWidth="3px";
   document.getElementById("det-photo").src=getImg(ev);
   document.getElementById("det-tipo").textContent=tipoSymbols[ev.tipo]+" "+tipoLabels[ev.tipo].toUpperCase();
   document.getElementById("det-tipo").style.color=ev.color;
