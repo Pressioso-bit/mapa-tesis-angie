@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fichas de Análisis Visual — Flyers Afrodiaspóricos | Tesis Angie Mercado</title>
+<style>
+  :root {
+    --verde: #1D9E75; --verde-light: #E1F5EE; --verde-dark: #085041;
+    --violeta: #7F77DD; --violeta-light: #EEEDFE; --violeta-dark: #3C3489;
+    --naranja: #D85A30; --naranja-light: #FAECE7; --naranja-dark: #712B13;
+    --amarillo: #BA7517; --amarillo-light: #FAEEDA; --amarillo-dark: #633806;
+    --azul: #378ADD; --azul-light: #EBF3FD;
+    --gris: #888780; --gris-light: #F4F3F2;
+    --texto: #1a1a1a; --texto-sec: #6b6b6b;
+    --borde: #e0dedd;
+    --radio: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f7f6f4;
+    color: var(--texto);
+    padding: 24px 16px;
+  }
+  .portada {
+    max-width: 860px;
+    margin: 0 auto 32px;
+    background: #1a1a2e;
+    color: white;
+    border-radius: 12px;
+    padding: 32px 36px;
+  }
+  .portada h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .portada p { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .portada .meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+  .portada .meta-item { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .portada .meta-item strong { color: rgba(255,255,255,0.85); display: block; font-size: 13px; margin-bottom: 2px; }
+
+  .nav-fichas {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .nav-fichas h3 { font-size: 12px; color: var(--texto-sec); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .nav-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nav-btn {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--borde);
+    background: var(--gris-light);
+    color: var(--texto);
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-btn:hover { background: #e8e7e5; }
+  .nav-btn.active { background: #2c2c2c; color: #f5c97a; border-color: #2c2c2c; font-weight: 600; }
+
+  .ficha-wrapper {
+    max-width: 860px;
+    margin: 0 auto 24px;
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ficha-cabecera {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--borde);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .ficha-codigo {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: monospace;
+    background: var(--violeta-light);
+    color: var(--violeta-dark);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .ficha-titulo { flex: 1; }
+  .ficha-titulo h2 { font-size: 16px; font-weight: 600; color: var(--texto); margin-bottom: 3px; }
+  .ficha-titulo .meta-row { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--texto-sec); }
+  .tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  .tag-colectivo { background: #e8f4fd; color: #1a5276; }
+  .tag-sat { background: var(--verde-light); color: var(--verde-dark); }
+  .tag-afl { background: var(--naranja-light); color: var(--naranja-dark); }
+  .tag-amb { background: var(--amarillo-light); color: var(--amarillo-dark); }
+  .tag-id { background: var(--violeta-light); color: var(--violeta-dark); }
+  .tag-dim { background: var(--gris-light); color: var(--texto-sec); }
+
+  .ficha-body { padding: 0; }
+  .seccion {
+    border-bottom: 1px solid var(--borde);
+    padding: 14px 20px;
+  }
+  .seccion:last-child { border-bottom: none; }
+  .sec-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--texto-sec);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sec-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .campo-label {
+    font-size: 10px;
+    color: var(--texto-sec);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .campo-val {
+    font-size: 13px;
+    color: var(--texto);
+    line-height: 1.55;
+    background: var(--gris-light);
+    padding: 8px 10px;
+    border-radius: 5px;
+    border-left: 3px solid var(--borde);
+  }
+  .campo-val.ausente { color: var(--texto-sec); font-style: italic; }
+  .campo { margin-bottom: 10px; }
+  .campo:last-child { margin-bottom: 0; }
+  .dims { display: flex; flex-wrap: wrap; gap: 6px; }
+  .dim-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .dim-palabras { background: var(--violeta-light); color: var(--violeta-dark); }
+  .dim-cosas { background: var(--verde-light); color: var(--verde-dark); }
+  .dim-personas { background: var(--amarillo-light); color: var(--amarillo-dark); }
+  .dim-repr { background: var(--naranja-light); color: var(--naranja-dark); }
+
+  .sintesis-box {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: rgba(255,255,255,0.9);
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .sin-flyer {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--gris-light),
+      var(--gris-light) 10px,
+      #ebe9e7 10px,
+      #ebe9e7 20px
+    );
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    color: var(--texto-sec);
+    font-size: 12px;
+  }
+
+  /* Editable fields */
+  .campo-val[contenteditable],
+  .ficha-titulo h2[contenteditable] {
+    cursor: text;
+    outline: none;
+    transition: background 0.15s, border-radius 0.15s;
+    border-radius: 3px;
+  }
+  .campo-val[contenteditable]:hover,
+  .ficha-titulo h2[contenteditable]:hover {
+    background: #eeecf0;
+  }
+  .campo-val[contenteditable]:focus,
+  .ficha-titulo h2[contenteditable]:focus {
+    background: #f0eeff;
+    box-shadow: 0 0 0 2px rgba(127,119,221,0.25);
+  }
+
+  /* Toolbar */
+  #edit-toolbar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1a1a2e;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    font-size: 12px;
+  }
+  #edit-toolbar .tb-label { color: rgba(255,255,255,0.55); font-size: 11px; }
+  #edit-toolbar .tb-status { font-size: 11px; color: #6ee89a; }
+  #edit-toolbar button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #btn-save { background: var(--violeta); color: white; }
+  #btn-save:hover { background: #6660c8; }
+  #btn-reset { background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15) !important; }
+  #btn-reset:hover { color: white; border-color: rgba(255,255,255,0.4) !important; }
+  #btn-print { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+  #btn-print:hover { background: rgba(255,255,255,0.18); }
+
+  @media print {
+    .nav-fichas { display: none; }
+    #edit-toolbar { display: none; }
+    .ficha-wrapper { break-inside: avoid; page-break-inside: avoid; }
+  }
+  @media (max-width: 600px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .ficha-cabecera { flex-direction: column; }
+    #edit-toolbar { bottom: 12px; right: 12px; left: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <h1>Fichas de Análisis Visual — Flyers Afrodiaspóricos</h1>
+  <p>Instrumento metodológico para el análisis del corpus de flyers de colectivos afrodescendientes en Santiago (2020–2026). Marco analítico: Sørensen & Carman (palabras · cosas · personas) + representaciones como dimensión transversal · amefricanidad (L. González) · sentimientos patrimoniales (J. Gómez Villar) · Black Fantastic (R. Iton) · heritagescape (Di Giovine).</p>
+  <div class="meta">
+    <div class="meta-item"><strong>Investigadora</strong>Angie Mercado</div>
+    <div class="meta-item"><strong>Programa</strong>Magíster en Patrimonio Cultural, PUC</div>
+    <div class="meta-item"><strong>Corpus</strong>15 flyers analizados</div>
+    <div class="meta-item"><strong>Período</strong>2020 – 2026</div>
+  </div>
+</div>
+
+<div class="nav-fichas">
+  <h3>Índice de fichas</h3>
+  <div class="nav-grid">
+    <a class="nav-btn" href="#FL-01">FL-01 Cabello Bello 2025</a>
+    <a class="nav-btn" href="#FL-02">FL-02 Juntanza Mayor 2026</a>
+    <a class="nav-btn" href="#FL-03">FL-03 Cuerpo Mujer Negra 2022</a>
+    <a class="nav-btn" href="#FL-04">FL-04 2da Asamblea Negra</a>
+    <a class="nav-btn" href="#FL-05">FL-05 Asamblea Negra KN 2021</a>
+    <a class="nav-btn" href="#FL-06">FL-06 Herencia Viva TK 2022</a>
+    <a class="nav-btn" href="#FL-07">FL-07 Afrorigen 2025 TK</a>
+    <a class="nav-btn" href="#FL-08">FL-08 Taller Collage TGA 2023</a>
+    <a class="nav-btn" href="#FL-09">FL-09 Día Mujer Afrodescendiente</a>
+    <a class="nav-btn" href="#FL-10">FL-10 Encuentro Tribal SAA 2020</a>
+    <a class="nav-btn" href="#FL-11">FL-11 Afrocolombianidad 2022</a>
+    <a class="nav-btn" href="#FL-12">FL-12 Ser Extranjero Iquique 2024</a>
+    <a class="nav-btn" href="#FL-13">FL-13 Ser Extranjero Rancagua 2025</a>
+    <a class="nav-btn" href="#FL-14">FL-14 Semillero Afrodiaspórico 2024</a>
+    <a class="nav-btn" href="#FL-15">FL-15 Festival Herencias Rebeldía</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-01 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-01">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-01</div>
+    <div class="ficha-titulo">
+      <h2>Cabello Bello: Patrimonios de la Diáspora Africana</h2>
+      <div class="meta-row">
+        <span>CBA-2025-1</span>
+        <span>25 mayo 2025</span>
+        <span class="tag tag-colectivo">Soyalmadenegra + Kilombo Negrocéntricxs</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Mujer afrodescendiente en primer plano con turbante de tela colorida (naranja y estampados afro). Fondo oscuro que concentra la atención en el rostro y el cabello/turbante. El nombre "Cabello Bello" domina el espacio textual en tipografía grande. Subtítulo "Patrimonios de la Diáspora Africana" articula el cabello como objeto patrimonial explícito.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Mujer negra con turbante como elemento central. El turbante opera como objeto de doble inscripción: práctica cotidiana y declaración patrimonial. El cabello/peinado no es accesorio sino argumento.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">El turbante activa la cadena generacional del saber capilar: vincula la práctica presente con la transmisión matrilineal que cruza la historia desde África occidental. La "instalación Cabello Bello" citada hace del cabello un objeto de exhibición patrimonial en campus universitario.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Uso del color y tipografía</div>
+          <div class="campo-val">Fondo negro que resignifica el color como posición política. Tipografía display en blanco/dorado. Estampados del turbante en naranja-marrón evocan telas del África occidental (wax, ankara). Paleta afrocéntrica deliberada.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic (R. Iton)</div>
+          <div class="campo-val">El fondo negro absoluto y la iluminación dramática construyen un espacio onírico que saca al sujeto afrodescendiente del entorno urbano-chileno y lo inscribe en una temporalidad afrodiaspórica atemporal. El cabello como portal.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Vocabulario autodenominativo</div>
+          <div class="campo-val">"Diáspora Africana", "Patrimonios" (plural deliberado vs. el "Patrimonio" en singular del Estado 2025). "Cabello Bello" como autoproclamación que invierte la historia del cabello afro patologizado.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Tensión con el DAP</div>
+          <div class="campo-val">Directa. El plural "Patrimonios" tensiona el cambio de 2025 (Día del Patrimonio → singular). El cabello como patrimonio subvierte la lógica del bien inmueble o monumental del DAP. Reclamo sin petición: el flyer no pide reconocimiento, lo declara.</div>
+        </div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Interpelación legislativa</div>
+        <div class="campo-val">Alusión implícita a Ley 21.151 (turbante y trenzado como PCI). Al nombrar la Diáspora y no la nación, el flyer excede y desborda el marco legal que exigió genealogía colonial documentada.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Tipo</div>
+          <div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Argumentación</div>
+          <div class="campo-val">Orgullo y celebración como postura política. El título "Cabello Bello" transforma históricamente lo que fue señalado como diferencia negativa en objeto de belleza y patrimonio. Alegría activa, no reactiva.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:#3B6D11"></span>VI. Práctica patrimonial</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Práctica convocada</div>
+          <div class="campo-val">Festival / Juntanza + Taller de cabello + Exposición de arte (instalación Cabello Bello)</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Heritagescape</div>
+          <div class="campo-val">Institución cultural formal (Campus Oriente PUC). Apropiación del espacio universitario para hacer legible un patrimonio excluido de ese mismo espacio.</div>
+        </div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Encarnación del legado</div>
+        <div class="campo-val">El turbante en la imagen encarna literalmente el legado: el cuerpo es el soporte. El festival amplifica esto convocando a trenzar, ponerse turbante, performar en el campus — el patrimonio se hace cuerpo, no vitrina.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer condensa la operación central del corpus: autoproclamarse patrimonio sin esperar certificación estatal. El cabello/turbante como símbolo doble activa simultáneamente la cadena generacional (dimensión "cosas" de Sørensen & Carman), la corporalidad como argumento ("personas") y un discurso que nombra la diáspora sin pedir permiso ("palabras"). El Black Fantastic opera en el fondo oscuro que extrae al sujeto del espacio local y lo inscribe en una temporalidad afrodiaspórica que trasciende la Ley 21.151. Sentimiento satisfactorio que no niega la tensión — la integra como orgullo.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-02 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-02">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-02</div>
+    <div class="ficha-titulo">
+      <h2>Juntanza Mayor: Festival del Patrimonio Afro 2026</h2>
+      <div class="meta-row">
+        <span>JN-2026</span>
+        <span>31 mayo 2026</span>
+        <span class="tag tag-colectivo">Soyalmadenegra</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Composición festiva con múltiples cuerpos afrodescendientes en movimiento. Mujeres con trajes de colores vibrantes, turbantes, trenzas y ropa de inspiración afrocéntrica. El diseño tipográfico prominente nombra "JUNTANZA MAYOR" con jerarquía visual clara. Paleta de colores pan-africanos (verde, amarillo, rojo, negro). Imágenes superpuestas de actividades: danza, trenzado, turbantes.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Múltiples cuerpos negros en celebración colectiva. Mujeres con turbantes y trenzas como marcas de identidad. Cuerpos en danza y en conversación. La colectividad como sujeto visual, no el individuo.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">Turbantes, trenzas, danza afro (currulao, mapalé), emprendimientos artesanales — el flyer cataloga las materialidades que portan el legado. La Juntanza Mayor como síntesis anual de todas las prácticas patrimoniales del ciclo.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Uso del color y tipografía</div>
+          <div class="campo-val">Paleta pan-africana completa. Tipografía en negrita con estética de carnaval/festival. La abundancia visual mimetiza la densidad de la juntanza como evento que desborda el espacio convocado.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La abundancia y desbordamiento visual produce un exceso celebratorio que escapa la lógica del patrimonio austero y solemne del DAP. La juntanza como fiesta es también afirmación ontológica.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Vocabulario autodenominativo</div>
+          <div class="campo-val">"Juntanza Mayor" (término propio, no "encuentro" ni "asamblea" del vocabulario institucional). "Patrimonio Afro" — apropiación del concepto institucional rearticulado desde adentro. "Festival" como forma de democratizar el acceso al patrimonio.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Tensión con el DAP</div>
+          <div class="campo-val">El "Mayor" inscribe jerarquía propia, independiente del reconocimiento estatal. La elección del Día de los Patrimonios (31 mayo) es política: se sitúa en el mismo calendario oficial para resignificarlo desde abajo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La abundancia de cuerpos, colores y actividades produce un sentimiento de plenitud y celebración. La Juntanza Mayor 2026 como culminación visible del trabajo de cinco años — sentimiento de llegada sin cierre.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:#3B6D11"></span>VI. Práctica patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Práctica convocada</div><div class="campo-val">Juntanza / encuentro + Danza/performance + Taller de cabello + Feria/emprendimiento + Exposición de arte — todas simultáneas</div></div>
+        <div class="campo"><div class="campo-label">Heritagescape</div><div class="campo-val">Institución cultural formal (Campus Oriente UC) apropiada como territorio del patrimonio afrodiaspórico. Reversión del espacio académico.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        La Juntanza Mayor 2026 funciona como archive vivant (Taylor): la imagen no documenta un pasado sino que convoca un futuro que ya ocurrió. La multiplicidad de prácticas en un solo evento produce la condensación del Legado Afrodiaspórico como totalidad encarnada. El flyer opera como manifiesto visual: la juntanza no tiene sede fija porque su itinerancia es la práctica patrimonial misma — confirma la hipótesis del mapa. El sentimiento satisfactorio no borra el contexto de exclusión: lo excede performativamente.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-03 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-03">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-03</div>
+    <div class="ficha-titulo">
+      <h2>El Cuerpo de la Mujer Negra como Patrimonio — Juntanza 2022</h2>
+      <div class="meta-row">
+        <span>JN-2022-1</span>
+        <span>29 mayo 2022</span>
+        <span class="tag tag-colectivo">Soyalmadenegra + Kilombo + CIIR</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Imagen de mujer afrodescendiente con el cabello natural destacado. Fondo fotográfico o ilustrado con texturas de tela. El título hace del "cuerpo" el objeto patrimonial explícito — declaración programática. Logos institucionales (CIIR, Escuela de Arte UC) en la parte inferior.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">El cuerpo mismo es declarado patrimonio. El cabello natural como signo de resistencia y memoria. La presencia de logos académicos crea tensión: el cuerpo comunitario en diálogo con la legitimación institucional.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">El Laberinto Antirracista y el taller de conocimientos ancestrales activan la cadena: el evento transmite saberes del cuerpo de persona a persona, no de texto a lector.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Color y tipografía</div>
+          <div class="campo-val">Tipografía directa, sin ornamento. El énfasis visual está en el enunciado: "CUERPO" y "PATRIMONIO" articulados como equivalentes. La sobriedad contrasta con el radicalismo conceptual del enunciado.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">Moderado. La declaración teórica ("el cuerpo ES el patrimonio") abre un campo conceptual que excede lo normativo del DAP, pero el diseño es relativamente convencional — la radicalidad está en el texto.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Vocabulario autodenominativo</div>
+          <div class="campo-val">"Cuerpo de la Mujer Negra como Patrimonio" — apropiación y rearticulación del lenguaje del patrimonio oficial. "Laberinto Antirracista" como neologismo de resistencia. "Conocimientos ancestrales" como categoría epistemológica alternativa.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Tensión con el DAP</div>
+          <div class="campo-val">Máxima. El enunciado del evento es una crítica directa al DAP que sitúa el patrimonio en objetos, edificios y territorios. Aquí el patrimonio es el cuerpo vivo, móvil, sin certificación necesaria. Produce una inversión del sujeto/objeto patrimonial.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">Orgullo por la declaración autónoma de patrimonialidad. Pero el enunciado lleva implícita la historia de la negación — el orgullo se construye sobre la herida. Satisfactorio con memoria de la aflicción.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:#3B6D11"></span>VI. Práctica patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Práctica convocada</div><div class="campo-val">Juntanza + Exposición de arte + Taller de trenzado / cabello + Asamblea política (Laberinto Antirracista)</div></div>
+        <div class="campo"><div class="campo-label">Heritagescape</div><div class="campo-val">Institución cultural formal (Campus Oriente PUC) en el Día de los Patrimonios — disputa simbólica del calendario y el espacio institucional.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer es el enunciado teórico más explícito del corpus: el cuerpo de la mujer negra no porta el patrimonio — ES el patrimonio. Siguiendo a Diana Taylor, esto nombra la "política de la presencia": la práctica que produce presencia sin necesitar archivo oficial. El evento en el Día de los Patrimonios opera como acto de habla performativo (Austin): al decirlo en ese día, en ese espacio, lo hace. La presencia de CIIR y Escuela de Arte UC señala la tensión constitutiva: el reconocimiento institucional que se busca, se usa y se excede simultáneamente.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-04 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-04">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-04</div>
+    <div class="ficha-titulo">
+      <h2>2da Asamblea Afrodescendiente (AN-2025)</h2>
+      <div class="meta-row">
+        <span>AN-2025</span>
+        <span>2025</span>
+        <span class="tag tag-colectivo">Gestión Cultural Afro</span>
+        <span class="tag tag-amb">Ambivalente</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer de asamblea con diseño gráfico político. Mujeres afrodescendientes en posición de dignidad y fuerza. Paleta de colores pan-africanos. El nombre "2da Asamblea" señala continuidad organizativa — hay una primera, habrá una tercera. Texto informativo sobre fecha, lugar y agenda.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Cuerpos en posición política — de pie, mirando al frente, no en performance festiva sino en disposición de deliberación. La asamblea como práctica corporal colectiva diferente de la juntanza celebratoria.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">Moderada. El foco es la organización política más que la transmisión de saberes corporales. Sin embargo, la asamblea misma es una práctica heredada de formas organizativas afrodiaspóricas (cabildo, quilombo).</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Vocabulario autodenominativo</div>
+          <div class="campo-val">"Asamblea Afrodescendiente" — término que combina la forma política deliberativa con la identidad racial como sujeto político. Apela a la acción política directa más que a la celebración cultural.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Tensión con el DAP / legislación</div>
+          <div class="campo-val">La asamblea como forma organizativa apunta a incidir en políticas públicas. Tensión explícita con el Estado: se delibera sobre participación política afrodescendiente, no solo sobre patrimonio cultural. Posible referencia implícita a la Ley 21.151 y sus vacíos.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-amb">Ambivalente / paradójico</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La "2da" asamblea señala continuidad pero también la insuficiencia de una primera. La organización política expresa un reclamo no resuelto (aflictivo) articulado como fuerza colectiva (satisfactorio). La ambivalencia es constitutiva de la práctica asamblearia.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        La asamblea afrodescendiente produce un tipo de patrimonio decolonial diferente: no celebratorio sino deliberativo. La repetición ("2da") construye institucionalidad propia, paralela y autónoma del Estado. Fairclough: el género "asamblea" activa un campo semántico de derechos, voto y representación que el DAP no contempla. La paradoja performativa del reconocimiento opera aquí con mayor tensión: la asamblea reclama reconocimiento al mismo Estado cuyas estructuras el corpus dice exceder.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-05 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-05">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-05</div>
+    <div class="ficha-titulo">
+      <h2>Asamblea General Negra — Kilombo Negrocéntricxs (KN-2021)</h2>
+      <div class="meta-row">
+        <span>KN-2021</span>
+        <span>29 abril 2021</span>
+        <span class="tag tag-colectivo">Kilombo Negrocéntricxs + Kutosoma</span>
+        <span class="tag tag-amb">Ambivalente</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer de asamblea con estética negrocéntrica. Fondo oscuro con tipografía en amarillo/dorado. El nombre "Asamblea General Negra" usa "Negra" como categoría política explícita, no eufemismo. Información de la escuela/lugar (San Ignacio 196, Metro Los Héroes) señala accesibilidad en espacio público.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades</div>
+          <div class="campo-val">La asamblea como práctica corporal colectiva. El término "Negrocéntricxs" (con x) señala también corporalidades disidentes de género, ampliando el sujeto político más allá del binarismo.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">El nombre mismo "Kilombo" (quilombo en variante afrobrasileña) activa un imaginario histórico de resistencia — el marronage como antecedente de la asamblea presente. Conexión entre pasado cimarrón y presente político.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Asamblea General Negra" — "Negro/a" como término político recuperado (vs. "afrodescendiente" técnico). "Negrocéntricxs" como epistemología que coloca la experiencia negra en el centro, no en el margen. "Kutosoma" (swahili: estudiar/aprender) activa conexión con el África continental.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-amb">Ambivalente / paradójico</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">Contexto pandemia + BLM 2020-2021: la asamblea emerge en un momento de crisis doble (sanitaria y racial). La dignidad política (satisfactorio) coexiste con la urgencia del reclamo (aflictivo). El espacio en escuela pública de barrio popular intensifica la tensión socioterritorial.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        "Kilombo" como nombre del colectivo es una declaración de genealogía política: el quilombo histórico (territorio de resistencia afrobrasileña) se reinscribe en el Santiago del siglo XXI. La asamblea general negra no pide reconocimiento estatal — replica la forma organizativa de un estado propio dentro del estado. Carman/Sørensen: dimensión "personas" radicalizada — no cuerpos que portan heritage sino cuerpos que producen soberanía cultural.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-06 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-06">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-06</div>
+    <div class="ficha-titulo">
+      <h2>Herencia Viva — Taller Kilombo (TK-2022)</h2>
+      <div class="meta-row">
+        <span>TK-2022</span>
+        <span>2022</span>
+        <span class="tag tag-colectivo">Kilombo Negrocéntricxs</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer con diseño que evoca la oralidad y la transmisión: imágenes de manos, texturas de tela, elementos de la naturaleza que aluden a saberes ancestrales. El título "Herencia Viva" articula el concepto de patrimonio como proceso vivo, no objeto inerte.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">"Herencia Viva" nombra directamente la transmisión como práctica activa. El taller como formato pedagógico encarna la cadena: el saber pasa de quien lo tiene a quien lo aprende, corporalmente, sin mediación textual.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La "herencia" como concepto temporal que vincula pasado-presente-futuro abre una dimensión que excede la lógica de archivo: la herencia vive porque los cuerpos la practican, no porque los museos la custodian.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Herencia Viva" vs. patrimonio inerte del DAP. "Amefricanidad" (González) operaría como marco implícito: los saberes afrolatinos como producción intelectual y cultural en pie de igualdad con el canon. El taller como práctica que "democratiza sin personalizar sintéticamente" (Fairclough).</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">El adjetivo "viva" produce un sentimiento de continuidad y potencia. La herencia no está perdida — está en transmisión activa. Sentimiento de pertenencia a una cadena que no se interrumpió.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        "Herencia Viva" es el nombre conceptual más preciso del corpus para la práctica que la tesis analiza: un patrimonio que no existe en objetos ni registros sino en la transmisión activa de cuerpo a cuerpo. El taller como metodología pedagógica activa la dimensión "cosas" de Sørensen & Carman de modo paradójico: los objetos (telas, herramientas) son soportes de una práctica que los excede. Fairclough: el género "taller" vs. "conferencia" marca una elección discursiva que horizontaliza la relación con el saber.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-07 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-07">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-07</div>
+    <div class="ficha-titulo">
+      <h2>Afrorigen — Festival de Artes y Oficios Negros 2025 (TK-2024)</h2>
+      <div class="meta-row">
+        <span>TK-2024</span>
+        <span>2025</span>
+        <span class="tag tag-colectivo">Kilombo Negrocéntricxs</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Diseño festivo que combina elementos visuales africanos/afrolatinos: patrones geométricos, colores vibrantes, siluetas de personas en movimiento. "Afrorigen" es un neologismo que combina "afro" y "origen" — apunta a la raíz africana como origen constitutivo. El subtítulo "Artes y Oficios Negros" eleva los saberes prácticos (oficios) al nivel del arte.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades</div>
+          <div class="campo-val">Cuerpos en práctica artesanal y artística. La categoría "Oficios Negros" dignifica los trabajos manuales que históricamente se asociaron con la esclavitud y la subvierte: son ahora patrimonio y arte.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">El neologismo "Afrorigen" tiene dimensión mística: nombra un origen que no es geográfico sino ontológico. La feria como espacio donde los "oficios" circulan activa la economía afrodiaspórica como práctica cultural.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Afrorigen" como término propio (no encontrado en el lexicón del DAP). "Negrocéntricxs" reafirma la epistemología del colectivo. "Artes y Oficios" resignifica una categoría colonial (los oficios menores de los esclavizados) como categoría de orgullo. Pudahuel como localización periférica — el patrimonio no vive solo en el centro.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La feria en Pudahuel (periferia sur-poniente) produce un sentimiento de apropiación territorial: el patrimonio afrodiaspórico no necesita el centro de Santiago para existir. Orgullo localizado y situado.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Afrorigen en Pudahuel amplía el heritagescape del corpus: el eje norte-sur de 15 km del mapa incluye la periferia sur-poniente como nodo patrimonial. Di Giovine: el heritagescape es la red de lugares y prácticas que constituye el patrimonio — Pudahuel es parte de esa red tanto como Campus Oriente UC. El festival en la periferia confirma que la itinerancia no es precariedad sino práctica deliberada de distribución del legado.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-08 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-08">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-08</div>
+    <div class="ficha-titulo">
+      <h2>Taller Gestión Cultural Afrodescendiente — Collage (TGA-2023)</h2>
+      <div class="meta-row">
+        <span>TGA-2023</span>
+        <span>2023</span>
+        <span class="tag tag-colectivo">Soyalmadenegra</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer con estética de collage — la técnica del taller se refleja en el diseño. Fragmentos de imágenes superpuestos, recortes, texturas. Evoca la práctica del collage como metodología de memoria: reunir fragmentos dispersos para crear sentido nuevo. El collage es también una práctica del Atlántico Negro: cortar y pegar la historia para encontrar la continuidad.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">El collage como práctica manual transmisible. La instalación "Fragmentos del patrimonio afro" activa la dimensión cenital: el cuerpo presente conectado con la historia de la Trata. El centro-palacio (La Moneda) como espacio tensionado.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">El collage es una forma del Black Fantastic: reunir lo fragmentado, encontrar conexiones entre tiempos heterogéneos. Técnica que mimetiza la propia historia de la diáspora — fragmentada, recompuesta, viva.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Gestión Cultural Afrodescendiente" — taller que forma gestores, no solo participantes. Produce agencia: quien aprende a gestionar puede producir patrimonio. El Centro Cultural Palacio La Moneda como localización señala la tensión: el corazón del poder político chileno como escenario del taller.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La formación como práctica de empoderamiento. El taller produce capacidad, no solo experiencia. Sentimiento de agencia y continuidad — habrá más talleres porque hay personas formadas para hacerlos.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        El taller en La Moneda condensa la paradoja performativa: el edificio símbolo del Estado que excluye la herencia afrodiaspórica se convierte en espacio de transmisión de esa misma herencia. McDavid/Carman: arqueología del presente — trabajar con la comunidad para que produzca su propio archivo. El collage como técnica espeja la metodología de la tesis: reunir fragmentos (flyers, eventos, cuerpos, mapas) para construir un argumento sobre lo que el DAP no puede nombrar.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-09 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-09">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-09</div>
+    <div class="ficha-titulo">
+      <h2>Día de la Mujer Afrodescendiente — 25J (SAA-2023)</h2>
+      <div class="meta-row">
+        <span>SAA-2023</span>
+        <span>25 junio 2023</span>
+        <span class="tag tag-colectivo">Eritaj</span>
+        <span class="tag tag-afl">Aflictivo</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer de conmemoración del 25J (Día Mundial de Lucha contra el Racismo y Día de la Mujer Afrodescendiente). Diseño con elementos de memoria y denuncia. Colores que pueden incluir negro, rojo — paleta del antirracismo. Imágenes de mujeres afrodescendientes en posición de resistencia y dignidad. Fecha y lugar del acto público en Plaza de Armas.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Mujeres afrodescendientes como sujeto político central del 25J. El cuerpo como sitio de la doble opresión (racial + género) y de la doble resistencia. El espacio público (Plaza de Armas) como escenario del cuerpo político visible.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La fecha 25J activa una genealogía de lucha continental: el Día de la Mujer Afrodescendiente fue proclamado en 1992 en la República Dominicana. El flyer conecta Santiago con esa red hemisférica de resistencia.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Mujer Afrodescendiente" como categoría política interseccional. "25J" como código que conecta al colectivo con la red de organizaciones afrolatinas que comparten ese calendario. "Antirracismo" como práctica (no solo declaración) en el espacio público.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con el DAP / legislación</div>
+        <div class="campo-val">El 25J existe como fecha de lucha antes de cualquier legislación chilena. La Plaza de Armas como escenario del patrimonio oficial chileno (frente a la Catedral, el Correo) resignificado como territorio de la resistencia afrodiaspórica. Tensión espacial y simbólica directa con el Discurso Autorizado del Patrimonio.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-afl">Aflictivo</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La conmemoración activa memoria de la opresión. El 25J no se celebra — se recuerda y se denuncia. El sentimiento aflictivo es constitutivo de la práctica conmemorativa: la memoria de lo que se ha sufrido es también condición de la resistencia presente.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        El 25J es el único evento del corpus con sentimiento predominantemente aflictivo. La conmemoración opera de modo diferente a la juntanza celebratoria: activa la herida como práctica política (Gómez Villar: sentimiento patrimonial aflictivo). La Plaza de Armas como heritagescape es el espacio simbólico más cargado de Santiago — reclamar ese espacio en el 25J es producir presencia donde el patrimonio oficial no la contempla. Eritaj como colectivo de la comunidad haitiana añade una dimensión transnacional: el 25J como nodo de la diáspora global en el corazón administrativo de Santiago.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-10 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-10">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-10</div>
+    <div class="ficha-titulo">
+      <h2>Encuentro Tribal — Semana Agitación Antirracista 2020 (SAA-2020)</h2>
+      <div class="meta-row">
+        <span>SAA-2020</span>
+        <span>25 junio 2020</span>
+        <span class="tag tag-colectivo">Eritaj</span>
+        <span class="tag tag-afl">Aflictivo</span>
+        <span>Digital (pandemia COVID-19)</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer digital con paleta rojinegra. Diseño de agitación política que evoca la estética de los movimientos sociales. Contexto pandemia COVID-19 + explosión global BLM tras el asesinato de George Floyd (mayo 2020). El "Encuentro Tribal" como denominación que mezcla lo comunitario con lo político-ancestral. Formato digital: primer evento que no tiene lugar físico.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades</div>
+          <div class="campo-val">Los cuerpos están ausentes físicamente (pandemia) pero presentes como objeto del discurso: los cuerpos negros asesinados por la violencia policial (Floyd, Breonna Taylor) como punto de referencia. El cuerpo en peligro como activador del encuentro digital.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">"Tribal" activa una genealogía que el DAP eurocentrado trataría de primitivismo. Aquí es recuperación: lo tribal como forma de organización que ha sobrevivido a la colonización. El digital como territorio del Atlántico Negro en pandemia.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Agitación Antirracista" — término político de alta densidad ideológica. "Tribal" resignificado desde adentro. El año 2020 como fecha fundacional del corpus: el BLM global activa localmente las organizaciones afrodiaspóricas en Santiago. Primer evento del mapa — el origen del ciclo 2020-2026 estudiado.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-afl">Aflictivo</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">El contexto BLM + pandemia produce un sentimiento de urgencia y dolor que es también motor de acción. La "semana de agitación" transforma la aflicción en práctica organizada. El digital como único espacio posible en 2020 señala la restricción sin que esta elimine la potencia.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer es el origen histórico del corpus: sin el BLM de 2020 y sin la pandemia, el mapa comenzaría en otro momento. El formato digital confirma que el heritagescape afrodiaspórico incluye el espacio virtual como territorio patrimonial (Di Giovine: el patrimonio produce lugar, no al revés). La "agitación" como práctica de heritage activa la dimensión política de Sørensen & Carman que los Heritage Studies clásicos tienden a neutralizar: el patrimonio también se lucha.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-11 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-11">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-11</div>
+    <div class="ficha-titulo">
+      <h2>Afrocolombianidad — Día de los Patrimonios 2022 (AN-2023)</h2>
+      <div class="meta-row">
+        <span>AN-2023</span>
+        <span>2022 / 2023</span>
+        <span class="tag tag-colectivo">Soyalmadenegra</span>
+        <span class="tag tag-amb">Ambivalente</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Flyer con paleta de colores colombianos (amarillo, azul, rojo) combinados con elementos afrodiaspóricos. Mujeres con vestimentas del Pacífico colombiano, posiblemente currulao o mapa de Colombia superpuesta. El Día de la Afrocolombianidad (21 mayo) como referencia que conecta Chile con Colombia.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Cuerpos afrocolombianos en Chile — la doble diáspora: africana y colombiana. Vestimentas del Pacífico colombiano (currulao) activan la cadena cultural que viajó de África a Colombia y de Colombia a Santiago.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional</div>
+          <div class="campo-val">La Afrocolombianidad conecta la cadena en tres eslabones: África → Colombia (siglos XVI-XX) → Santiago (siglo XXI). El flyer inscribe al colectivo en esa cadena larga, no solo en la historia chilena.</div>
+        </div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Black Fantastic</div>
+        <div class="campo-val">La conexión transnacional Colombia-Chile-África activa el Atlántico Negro de Gilroy: la diáspora no es un destino final sino una red en movimiento. Santiago como nodo, no como periferia.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Afrocolombianidad" — categoría que el DAP chileno no contempla: ciudadanas colombianas afrodescendientes en Chile. Señala el vacío legal de la Ley 21.151 que exige "nacionalidad chilena" — estas mujeres están excluidas dos veces.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con el DAP / legislación</div>
+        <div class="campo-val">Directa. La Ley 21.151 exige nacionalidad chilena y genealogía colonial documentada desde el siglo XVI. Estas mujeres son colombianas migrantes: no califican. El evento lo celebra igualmente. Máxima tensión entre la práctica comunitaria y el marco legal.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-amb">Ambivalente / paradójico</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">Orgullo por la herencia colombiana/africana (satisfactorio) coexiste con la conciencia de ser excluida de la Ley 21.151 (aflictivo). La celebración es real y la exclusión también. Paradoja constitutiva del sujeto afrodescendiente migrante en Chile.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer expone con mayor claridad que ningún otro la contradicción central de la Ley 21.151: nombra el turbante y el trenzado pero excluye a las mujeres que los portan cotidianamente si no tienen la genealogía colonial certificada. La Afrocolombianidad celebrada en el Día de los Patrimonios chileno es el acto de habla más paradójico del corpus: participar en el calendario del Estado que te excluye para hacer visible esa exclusión. Amefricanidad de González: la experiencia afrolatina como categoría epistemológica que desafía las fronteras nacionales del patrimonio.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-12 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-12">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-12</div>
+    <div class="ficha-titulo">
+      <h2>Ser Extranjero en Chile — Iquique (SEXT-2024-1)</h2>
+      <div class="meta-row">
+        <span>SEXT-2024-1</span>
+        <span>13 agosto 2024</span>
+        <span class="tag tag-colectivo">Soyalmadenegra</span>
+        <span class="tag tag-id">Identidad</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Obra de teatro + conversatorio. Diseño con siluetas de personas diversas. Paleta que evoca el norte de Chile (desierto, cielo). El título "Ser Extranjero en Chile" nombra directamente la condición migrante como objeto de reflexión teatral. Información de la presentación en Iquique (norte minero, alta densidad de migración afrocaribeña).</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades</div>
+          <div class="campo-val">El cuerpo migrante como sujeto de la obra. El teatro como forma de encarnar la experiencia migratoria — no relatarla sino performarla. El conversatorio post-función como extensión de la práctica patrimonial en el intercambio de experiencias.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La gira teatral como práctica itinerante que lleva el Legado al norte: Iquique como ciudad de paso y de arraigo, primer destino de muchas migraciones afrocaribeas. El teatro como forma de hacer visible lo que la ciudad no nombra.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Ser Extranjero en Chile" como enunciado que nombra la experiencia estructural de la exclusión. "Trayectorias y percepciones migrantes" y "Mapeando Emociones" como prácticas metodológicas de mediación — el teatro como investigación participativa. "Antirracista" aparece en la denominación de actividades.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con DAP / legislación</div>
+        <div class="campo-val">Iquique concentra la mayor tensión migratoria del país (crisis humanitaria 2020-2021, campamentos en playas). El evento en Espacio Akana (espacio comunitario) lleva el patrimonio afrodiaspórico a ese contexto sin esperar condiciones institucionales favorables.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-id" style="background:var(--violeta-light);color:var(--violeta-dark)">Identidad / ambivalente</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La obra nombra la extrañeza como experiencia permanente del migrante: sentimiento de no-pertenencia que coexiste con la construcción activa de comunidad. El conversatorio convierte el dolor individual en práctica colectiva.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        La gira teatral activa el heritagescape como red: Iquique–Santiago–Rancagua son nodos de un mismo circuito de circulación del Legado. Di Giovine: el heritagescape no tiene centro fijo — su geografía es la de la práctica. Fairclough: el género "obra de teatro + conversatorio" democratiza el acceso a la reflexión sobre la migración; no es conferencia académica sino práctica cultural accesible. "Mapeando Emociones" como actividad resonó con la metodología del mapa profundo de la tesis: los sentimientos como dato metodológico, no solo como efecto.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-13 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-13">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-13</div>
+    <div class="ficha-titulo">
+      <h2>Ser Extranjero en Chile — Rancagua (SEXT-2025-1)</h2>
+      <div class="meta-row">
+        <span>SEXT-2025-1</span>
+        <span>16 mayo 2025</span>
+        <span class="tag tag-colectivo">Soyalmadenegra + Cía. Teatro en Casa</span>
+        <span class="tag tag-id">Identidad</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Fondo oscuro con la bandera chilena sostenida por siluetas de personas con los brazos levantados — imagen poderosa de ambigüedad: ¿la sostienen o la protestan? La bandera como objeto de tensión. Paleta tricolor (azul, rojo, blanco) más negro del fondo. Tipografía de gran impacto: "Ser Extranjero en Chile". SEREMI de Culturas y Teatro en Casa como organizadores — alianza entre el Estado regional y la compañía comunitaria.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Siluetas anónimas — cuerpos sin rostro que pueden ser cualquier migrante. La anonimidad como decisión política: la extranjería es una condición estructural, no individual. Los brazos en alto como gesto ambivalente (celebración y denuncia simultáneas).</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La bandera chilena sostenida desde abajo por cuerpos oscuros produce una imagen que invierte la simbología nacional: no la nación que contiene a sus ciudadanos sino los migrantes que cargan con la bandera del país que los excluye. Imagen poética de doble carga.</div>
+        </div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Color y tipografía</div>
+        <div class="campo-val">La paleta de la bandera sobre fondo negro produce máxima tensión visual: los colores nacionales sobre el negro que señala lo que la nación no ve ni reconoce. Tipografía blanca directa, sin ornamento. El contraste es el argumento.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Obra de Teatro + Conversatorio" — la misma estructura que Iquique. La gira como estrategia de distribución del legado: llevar el Patrimonio Afrodiaspórico a ciudades que no tienen colectivos locales establecidos. Rancagua (región de O'Higgins) como territorio minero con alta migración latinoamericana.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con DAP</div>
+        <div class="campo-val">La presencia de SEREMI de Culturas señala una inusual alianza con el Estado regional. Tension: el mismo Estado que en Ley 21.151 excluye a estas personas financia su visibilización en Rancagua. Fairclough: "democratización sin personalización sintética" — o todo lo contrario.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-amb">Ambivalente / paradójico</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La bandera chilena produce el mayor registro de ambivalencia del corpus: ¿qué siente un migrante afrodescendiente al ver su imagen en un flyer que lo llama a reflexionar sobre "ser extranjero en Chile"? La imagen no resuelve la tensión — la intensifica productivamente.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer es el más cargado simbólicamente del corpus. La bandera sobre el fondo negro es la imagen más precisa de la paradoja performativa del reconocimiento: los migrantes afrodescendientes cargan con los símbolos de la nación que los excluye, y eso mismo — cargarlos — es una práctica de presencia. Taylor: el performance no documenta, produce presencia. Aquí la bandera no representa la nación sino que señala el costo de estar en ella. La alianza con SEREMI añade la paradoja institucional: el Estado que financia la reflexión sobre su propia exclusión.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-14 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-14">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-14</div>
+    <div class="ficha-titulo">
+      <h2>Semillero Afrodiaspórico de Investigación (SEM-2024)</h2>
+      <div class="meta-row">
+        <span>SEM-2024</span>
+        <span>31 agosto – 9 noviembre 2024</span>
+        <span class="tag tag-colectivo">Soyalmadenegra + CIIR UC</span>
+        <span class="tag tag-sat">Satisfactorio</span>
+        <span>Actividad presencial — WhatsApp / Instagram</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Fondo con textura gráfica en tonos morado-rosado. En el centro, fotografía en blanco y negro de una mujer con turbante mirando al horizonte — figura de contemplación y pensamiento. Título en tipografía de bloque: "SEMILLERO AFRODIASPÓRICO DE INVESTIGACIÓN". Cuatro presentadores con fotos circulares: Joseph Gómez (investigador CIIR), Luiz Silva (abogado y antropólogo), Allison Ramay (investigadora CIIR), Angie Mercado (investigadora CIIR). Logos CIIR y Alma de Negra. QR code para inscripción. Fechas: 31 ago – 9 nov (Sábados). Campus San Joaquín UC, Vicuña Mackenna 4860, Macul.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades representadas</div>
+          <div class="campo-val">Mujer con turbante en posición pensativa — la intelectualidad afrodescendiente como representación central. No el cuerpo festivo ni el cuerpo en resistencia, sino el cuerpo que piensa e investiga. El turbante como símbolo que une el saber ancestral con la producción académica.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Cadena generacional / materialidades</div>
+          <div class="campo-val">El Semillero es la forma más explícita de la cadena generacional: siembra para que otros investiguen. El nombre "semillero" activa la metáfora agrícola africana — plantar para que nazca. Los 4 investigadores incluyen a Angie Mercado, quien es a la vez objeto y sujeto de la investigación.</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Color y tipografía</div>
+          <div class="campo-val">Paleta morado-rosado con blanco y negro. Femenina, académica, no festiva. La sobriedad tipográfica señala el registro intelectual. El gradiente de fondo evoca el amanecer — el semillero como inicio de algo que crecerá.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">La figura de la mujer pensante mirando al horizonte tiene dimensión oracular — la intelectual afrodescendiente que ve lo que la academia hegemónica no puede ver. Conexión con el concepto de "investigación indígena" de Tuhiwai Smith: investigar desde dentro, con epistemologías propias.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Semillero Afrodiaspórico" — término que combina la pedagogía crítica (semillero como práctica de formación popular) con la identidad política (afrodiaspórico). "Investigación" en el nombre señala la producción de conocimiento como práctica patrimonial. Los 4 panelistas son nombrados con sus roles: investigadores, abogado-antropólogo — legitimación académica desde adentro.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con el DAP</div>
+        <div class="campo-val">El Semillero en Campus UC (espacio académico de élite en Chile) es el evento más fronterizo del corpus: Soyalmadenegra en la universidad más prestigiosa del país. McDavid/Carman: arqueología pragmática — trabajar con la institución sin dejar que la institución decida los términos. La presencia de Angie Mercado como investigadora CIIR y como sujeto de su propia investigación encarna esa tensión.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-sat">Satisfactorio</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La intelectual afrodescendiente mirando al horizonte produce un sentimiento de potencia epistémica: hay conocimiento por producir, y las personas que lo van a producir están nombradas. El orgullo intelectual como variante del sentimiento satisfactorio — diferente al orgullo festivo de la Juntanza Mayor.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:#3B6D11"></span>VI. Práctica patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Práctica convocada</div><div class="campo-val">Publicación / escritura + Asamblea política + formación (semillero). El Semillero produce investigadores afrodiaspóricos — práctica patrimonial que se replica.</div></div>
+        <div class="campo"><div class="campo-label">Heritagescape</div><div class="campo-val">Institución cultural formal (Campus San Joaquín UC) — espacio académico de élite apropiado para la producción de conocimiento afrodiaspórico. Tensión máxima entre legitimación y autonomía.</div></div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Encarnación del legado</div>
+        <div class="campo-val">El Semillero encarna el legado de modo diferente: no en el cuerpo que danza o teje sino en el cuerpo que investiga y escribe. La tesis de Angie Mercado es el producto más directo de esta cadena — investigadora CIIR que estudia las prácticas de las que es parte.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        Este flyer documenta el evento metodológicamente más relevante para la tesis: el Semillero donde se forjó la investigadora que investiga. La figura de la mujer con turbante mirando al horizonte es una imagen del posicionamiento metodológico de Tuhiwai Smith: investigar desde adentro, con los marcos conceptuales propios de la comunidad. La paradoja performativa opera en su forma más sofisticada: Angie Mercado en el flyer como investigadora CIIR es simultáneamente sujeto de investigación, investigadora y productora del patrimonio que estudia. El Semillero hace visible que la tesis misma es una práctica patrimonial — no solo un análisis de prácticas.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FL-15 -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" id="FL-15">
+  <div class="ficha-cabecera">
+    <div class="ficha-codigo">FL-15</div>
+    <div class="ficha-titulo">
+      <h2>Festival Herencias en Rebeldía — Patrimonios Cimarrones (HR-2023)</h2>
+      <div class="meta-row">
+        <span>HR-2023</span>
+        <span>noviembre 2023</span>
+        <span class="tag tag-colectivo">Soyalmadenegra</span>
+        <span class="tag tag-id">Identidad / rebeldía</span>
+        <span>Instagram / WhatsApp</span>
+      </div>
+    </div>
+  </div>
+  <div class="ficha-body">
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--violeta)"></span>II. Dimensiones activas</div>
+      <div class="dims">
+        <span class="dim-badge dim-palabras">Palabras / discurso</span>
+        <span class="dim-badge dim-cosas">Cosas / materialidades</span>
+        <span class="dim-badge dim-personas">Personas / cuerpos</span>
+        <span class="dim-badge dim-repr">Representaciones (transversal)</span>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--naranja)"></span>III. Representaciones visuales</div>
+      <div class="campo">
+        <div class="campo-label">Descripción densa</div>
+        <div class="campo-val">Diseño que combina fotografía, collage y elementos tipográficos potentes. Paleta oscura con acentos de color que evocan la piel, el cuero, las telas. El MNBA (Museo Nacional de Bellas Artes) como locación produce una imagen de apropiación del espacio cultural de élite. El término "Cimarrones" en el nombre de la exposición activa la historia del marronage.</div>
+      </div>
+      <div class="grid-2">
+        <div class="campo">
+          <div class="campo-label">Corporalidades / Materialidades</div>
+          <div class="campo-val">Fotografía, collage, textil y archivo como materialidades de la exposición. El cabello afro como objeto de análisis explícito ("El cabello afro como patrimonio y resistencia"). 20+ artistas y talleristas: el cuerpo colectivo de la comunidad artística afrodiaspórica.</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Black Fantastic</div>
+          <div class="campo-val">"Cimarrones" activa el marronage como referente histórico y utopía: los cimarrones no solo huían, construían comunidades autónomas. El festival en el MNBA es un marronage simbólico: escapar del confinamiento cultural para ocupar el museo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--azul)"></span>IV. Análisis discursivo</div>
+      <div class="campo">
+        <div class="campo-label">Vocabulario autodenominativo</div>
+        <div class="campo-val">"Herencias en Rebeldía" — "rebeldía" como categoría patrimonial (no solo política). "Patrimonio Cimarrones" combina el lexicón del DAP con la historia de la resistencia: los cimarrones como sujetos de un patrimonio que el DAP no nombra. "Herencias" en plural confirma la operación de pluralización que recorre todo el corpus.</div>
+      </div>
+      <div class="campo">
+        <div class="campo-label">Tensión con el DAP</div>
+        <div class="campo-val">El MNBA es el templo del patrimonio artístico oficial chileno. El festival lo ocupa para mostrar que el arte y el patrimonio cimarrón existen, sin haber esperado invitación. Tensión espacial máxima: el espacio de consagración artística del Estado como escenario de la herencia que ese mismo Estado no consagra.</div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--amarillo)"></span>V. Sentimiento patrimonial</div>
+      <div class="grid-2">
+        <div class="campo"><div class="campo-label">Tipo</div><div class="campo-val"><span class="tag tag-amb">Ambivalente — rebeldía productiva</span></div></div>
+        <div class="campo"><div class="campo-label">Argumentación</div><div class="campo-val">La "rebeldía" es el nombre propio del sentimiento: no es aflicción ni es satisfacción simple, es la energía que transforma la exclusión en práctica cultural. Los cimarrones no se resignaron ni esperaron libertad — la construyeron. El festival hereda esa práctica.</div></div>
+      </div>
+    </div>
+    <div class="seccion">
+      <div class="sec-title"><span class="sec-dot" style="background:var(--gris)"></span>VII. Síntesis analítica</div>
+      <div class="sintesis-box">
+        "Patrimonio Cimarrones" es el nombre más radical del corpus para el patrimonio decolonial: nombra explícitamente la tradición de resistencia afrodiaspórica que el DAP no solo ignora sino que históricamente persiguió. El marronage como práctica patrimonial: los quilombos, los palenques, los cumbes como formas de organización cultural autónoma — Kilombo Negrocéntricxs lleva ese nombre, y este festival activa esa genealogía en el MNBA. Sørensen & Carman: las tres dimensiones (palabras, cosas, personas) operan simultáneamente — la exposición (cosas), los artistas (personas) y el discurso de la rebeldía (palabras) producen un patrimonio que el DAP no puede capturar sin subvertirlo.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- NOTA METODOLÓGICA -->
+<!-- ============================================================ -->
+<div class="ficha-wrapper" style="max-width:860px; margin: 0 auto 40px;">
+  <div class="ficha-cabecera" style="background:#1a1a2e; color:white;">
+    <div style="flex:1;">
+      <div style="font-size:14px; font-weight:600; margin-bottom:4px;">Nota metodológica sobre el corpus</div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.6);">Guía de uso de las fichas para la redacción de la tesis</div>
+    </div>
+  </div>
+  <div class="seccion">
+    <div class="campo-label">Flyers pendientes (sin imagen disponible al momento del análisis)</div>
+    <div class="campo-val">
+      Los siguientes eventos no tienen flyer disponible en el archivo y aparecen en el mapa con imagen genérica (campo3):<br><br>
+      • <strong>JM-001</strong> — Juntanza Mujeres Negras Semillero (jul 2022, Downtown Studios Metro Matta)<br>
+      • <strong>JN-2021-1</strong> — Juntanza Negra: Tejiendo Vínculos (2021)<br>
+      • <strong>JN-2024-1</strong> — Juntanza: Cuerpos que Resisten (2024)<br>
+      • <strong>JN-2025</strong> — Juntanza: Patrimonios Encarnados (2025)<br>
+      • <strong>COLOQUIO-2024</strong> — Coloquio: Mujeres Afrodescendientes y Patrimonio (7 ago 2024)<br><br>
+      La ausencia de flyer para juntanzas es en sí misma un dato analítico: no todos los eventos producen material de circulación digital. Las juntanzas más íntimas o más recientes pueden no tener archivo visual disponible — lo que refuerza el argumento de que el corpus de flyers es una muestra parcial del patrimonio encarnado, no su totalidad.
+    </div>
+  </div>
+  <div class="seccion">
+    <div class="campo-label">Patrón analítico emergente del corpus</div>
+    <div class="campo-val">
+      Del análisis de las 15 fichas emergen cuatro patrones recurrentes que pueden estructurar el apartado metodológico de la tesis:<br><br>
+      <strong>1. Pluralización deliberada:</strong> Todos los flyers usan "patrimonios", "herencias", "memorias" en plural, en oposición directa al singular del DAP y de la legislación vigente desde 2025.<br><br>
+      <strong>2. Itinerancia como práctica:</strong> El corpus abarca Santiago, Iquique, Rancagua, Valparaíso y el espacio digital. Ningún colectivo tiene sede fija. La movilidad es el mensaje.<br><br>
+      <strong>3. Apropiación del espacio institucional:</strong> MNBA, Campus Oriente UC, Campus San Joaquín UC, Centro Cultural La Moneda, Plaza de Armas — los eventos más visibles del corpus ocurren en los espacios del patrimonio oficial, no en márgenes.<br><br>
+      <strong>4. La paradoja del reconocimiento:</strong> Los colectivos participan del calendario y los espacios del Estado (Día de los Patrimonios, SEREMI) mientras producen un discurso que excede y critica ese mismo Estado. No es contradicción sino estrategia.
+    </div>
+  </div>
+  <div class="seccion">
+    <div class="campo-label">Cómo citar las fichas en la tesis</div>
+    <div class="campo-val">
+      Las fichas son instrumento de trabajo metodológico propio. Se pueden citar como: "Ficha de análisis visual FL-[número] (elaboración propia, 2026)" o incorporarse como anexo metodológico. El análisis de cada ficha puede derivar en citas directas para los capítulos de Resultados (dimensiones "palabras", "cosas", "personas") y la Síntesis sobre producción de patrimonio decolonial.
+    </div>
+  </div>
+</div>
+
+<!-- Barra de edición -->
+<div id="edit-toolbar">
+  <span class="tb-label">✏️ Edición activa</span>
+  <span class="tb-status" id="tb-status">Guardado ✓</span>
+  <button id="btn-save">Guardar</button>
+  <button id="btn-print">Imprimir / PDF</button>
+  <button id="btn-reset">Restablecer</button>
+</div>
+
+<script>
+// ── Navegación suave ──────────────────────────────────────────────
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const id = this.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── IntersectionObserver: resaltar ficha activa en el índice ─────
+const navLinks = {};
+document.querySelectorAll('.nav-btn').forEach(a => {
+  const id = a.getAttribute('href').slice(1);
+  navLinks[id] = a;
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      Object.values(navLinks).forEach(a => a.classList.remove('active'));
+      const link = navLinks[entry.target.id];
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.ficha-wrapper').forEach(el => observer.observe(el));
+
+// ── Modo presentación: ocultar toolbar con ?presentacion ─────────
+if (new URLSearchParams(location.search).has('presentacion')) {
+  const tb = document.getElementById('edit-toolbar');
+  if (tb) tb.style.display = 'none';
+  document.querySelectorAll('.campo-val, .ficha-titulo h2').forEach(el => {
+    el.removeAttribute('contenteditable');
+  });
+}
+
+// ── Edición + localStorage ───────────────────────────────────────
+const STORAGE_KEY = 'fichas_angie_v1';
+
+// Hacer editables .campo-val y los h2 de cada ficha
+document.querySelectorAll('.campo-val, .ficha-titulo h2').forEach(el => {
+  el.setAttribute('contenteditable', 'true');
+  el.setAttribute('spellcheck', 'false');
+});
+
+// Cargar contenido guardado
+function cargarGuardado() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    document.querySelectorAll('.campo-val').forEach((el, i) => {
+      if (data[i] !== undefined) el.innerHTML = data[i];
+    });
+    const titles = JSON.parse(localStorage.getItem(STORAGE_KEY + '_titles') || '{}');
+    document.querySelectorAll('.ficha-titulo h2').forEach((el, i) => {
+      if (titles[i] !== undefined) el.innerHTML = titles[i];
+    });
+    setStatus('Guardado ✓');
+  } catch(e) {}
+}
+
+// Guardar todo
+function guardar() {
+  const data = {};
+  document.querySelectorAll('.campo-val').forEach((el, i) => { data[i] = el.innerHTML; });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const titles = {};
+  document.querySelectorAll('.ficha-titulo h2').forEach((el, i) => { titles[i] = el.innerHTML; });
+  localStorage.setItem(STORAGE_KEY + '_titles', JSON.stringify(titles));
+  setStatus('Guardado ✓');
+}
+
+// Indicador de cambios
+let timer;
+function setStatus(msg, color) {
+  const s = document.getElementById('tb-status');
+  s.textContent = msg;
+  s.style.color = color || '#6ee89a';
+}
+
+document.querySelectorAll('.campo-val, .ficha-titulo h2').forEach(el => {
+  el.addEventListener('input', () => {
+    setStatus('Cambios sin guardar…', '#f5c97a');
+    clearTimeout(timer);
+    timer = setTimeout(guardar, 1500);
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      document.execCommand('insertLineBreak');
+    }
+  });
+});
+
+document.getElementById('btn-save').addEventListener('click', () => {
+  guardar();
+  setStatus('¡Guardado! ✓', '#6ee89a');
+});
+
+document.getElementById('btn-print').addEventListener('click', () => {
+  guardar();
+  window.print();
+});
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  if (confirm('¿Restablecer todas las fichas al texto original? Se perderán los cambios guardados.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEY + '_titles');
+    location.reload();
+  }
+});
+
+// Cargar al inicio
+cargarGuardado();
+</script>
+</body>
+</html>
