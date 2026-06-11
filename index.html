@@ -1331,7 +1331,7 @@ function toggleEditMode(){
 
 function saveEventEdit(id){
   const edits = loadEdits();
-  const textFields = ["nombre","fecha","lugar","comuna","descripcion","sentimiento","marcoLabel","marcoNota","keywords"];
+  const textFields = ["nombre","colectivo","fecha","lugar","comuna","descripcion","sentimiento","marcoLabel","marcoNota","keywords"];
   const patch = edits[id] || {};
   textFields.forEach(f=>{
     const el = document.getElementById("det-edit-"+f);
@@ -1585,6 +1585,10 @@ function select(id, forceRefresh){
 
   // viñetas grid: view vs edit
   const vinGrid = editMode ? `
+    <div style="padding:7px 14px;border-bottom:1px solid var(--border);">
+      <div class="det-lbl">Organización / Colectivo</div>
+      <input id="det-edit-colectivo" class="det-edit-input" value="${evd.colectivo.replace(/"/g,'&quot;')}">
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
       <div style="padding:7px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
         <div class="det-lbl">Fecha</div>
