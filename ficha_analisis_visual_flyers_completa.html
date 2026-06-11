@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fichas de Análisis Visual — Flyers Afrodiaspóricos | Tesis Angie Mercado</title>
+<title>Fichas de Análisis Visual de Flyers Afrodiaspóricos · Angie Mercado</title>
 <style>
   :root {
     --verde: #1D9E75; --verde-light: #E1F5EE; --verde-dark: #085041;
@@ -237,9 +237,50 @@
   #btn-print:hover { background: rgba(255,255,255,0.18); }
 
   @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    body { background: white; padding: 0; font-size: 11px; }
     .nav-fichas { display: none; }
     #edit-toolbar { display: none; }
-    .ficha-wrapper { break-inside: avoid; page-break-inside: avoid; }
+
+    .portada {
+      background: #1a1a2e !important;
+      color: white !important;
+      border-radius: 0;
+      margin: 0 0 24px;
+      padding: 24px 28px;
+      page-break-after: avoid;
+    }
+
+    .ficha-wrapper {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      page-break-before: auto;
+      border-radius: 0;
+      border: 1px solid #ccc;
+      margin: 0 0 16px;
+      box-shadow: none;
+    }
+
+    .campo-val {
+      background: #f8f8f8 !important;
+      border-left: 2px solid #ccc;
+      font-size: 11px;
+    }
+
+    .sintesis-box {
+      background: #1a1a2e !important;
+      color: white !important;
+      font-size: 11px;
+    }
+
+    .sec-title { font-size: 9px; }
+    .campo-label { font-size: 9px; }
+    .ficha-titulo h2 { font-size: 13px; }
+    .ficha-codigo { font-size: 10px; }
+
+    .grid-2 { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    a { color: inherit; text-decoration: none; }
   }
   @media (max-width: 600px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
@@ -251,7 +292,7 @@
 <body>
 
 <div class="portada">
-  <h1>Fichas de Análisis Visual — Flyers Afrodiaspóricos</h1>
+  <h1>Fichas de Análisis Visual de Flyers Afrodiaspóricos</h1>
   <p>Instrumento metodológico para el análisis del corpus de flyers de colectivos afrodescendientes en Santiago (2020–2026). Marco analítico: Sørensen & Carman (palabras · cosas · personas) + representaciones como dimensión transversal · amefricanidad (L. González) · sentimientos patrimoniales (J. Gómez Villar) · Black Fantastic (R. Iton) · heritagescape (Garden).</p>
   <div class="meta">
     <div class="meta-item"><strong>Investigadora</strong>Angie Mercado</div>
