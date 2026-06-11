@@ -187,7 +187,8 @@
 
   /* Editable fields */
   .campo-val[contenteditable],
-  .ficha-titulo h2[contenteditable] {
+  .ficha-titulo h2[contenteditable],
+  .sintesis-box[contenteditable] {
     cursor: text;
     outline: none;
     transition: background 0.15s, border-radius 0.15s;
@@ -201,6 +202,13 @@
   .ficha-titulo h2[contenteditable]:focus {
     background: #f0eeff;
     box-shadow: 0 0 0 2px rgba(127,119,221,0.25);
+  }
+  .sintesis-box[contenteditable]:hover {
+    background: rgba(127,119,221,0.12) !important;
+  }
+  .sintesis-box[contenteditable]:focus {
+    background: rgba(127,119,221,0.2) !important;
+    box-shadow: 0 0 0 2px rgba(127,119,221,0.35);
   }
 
   /* Toolbar */
@@ -1548,7 +1556,7 @@ document.querySelectorAll('.ficha-wrapper').forEach(el => observer.observe(el));
 if (new URLSearchParams(location.search).has('presentacion')) {
   const tb = document.getElementById('edit-toolbar');
   if (tb) tb.style.display = 'none';
-  document.querySelectorAll('.campo-val, .ficha-titulo h2').forEach(el => {
+  document.querySelectorAll('.campo-val, .ficha-titulo h2, .sintesis-box').forEach(el => {
     el.removeAttribute('contenteditable');
   });
 }
@@ -1556,8 +1564,8 @@ if (new URLSearchParams(location.search).has('presentacion')) {
 // ── Edición + localStorage ───────────────────────────────────────
 const STORAGE_KEY = 'fichas_angie_v1';
 
-// Hacer editables .campo-val y los h2 de cada ficha
-document.querySelectorAll('.campo-val, .ficha-titulo h2').forEach(el => {
+// Hacer editables .campo-val, los h2 y las síntesis
+document.querySelectorAll('.campo-val, .ficha-titulo h2, .sintesis-box').forEach(el => {
   el.setAttribute('contenteditable', 'true');
   el.setAttribute('spellcheck', 'false');
 });
@@ -1573,6 +1581,10 @@ function cargarGuardado() {
     document.querySelectorAll('.ficha-titulo h2').forEach((el, i) => {
       if (titles[i] !== undefined) el.innerHTML = titles[i];
     });
+    const sintesis = JSON.parse(localStorage.getItem(STORAGE_KEY + '_sintesis') || '{}');
+    document.querySelectorAll('.sintesis-box').forEach((el, i) => {
+      if (sintesis[i] !== undefined) el.innerHTML = sintesis[i];
+    });
     setStatus('Guardado ✓');
   } catch(e) {}
 }
@@ -1582,6 +1594,9 @@ function guardar() {
   const data = {};
   document.querySelectorAll('.campo-val').forEach((el, i) => { data[i] = el.innerHTML; });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const sintesisData = {};
+  document.querySelectorAll('.sintesis-box').forEach((el, i) => { sintesisData[i] = el.innerHTML; });
+  localStorage.setItem(STORAGE_KEY + '_sintesis', JSON.stringify(sintesisData));
   const titles = {};
   document.querySelectorAll('.ficha-titulo h2').forEach((el, i) => { titles[i] = el.innerHTML; });
   localStorage.setItem(STORAGE_KEY + '_titles', JSON.stringify(titles));
