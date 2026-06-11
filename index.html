@@ -859,31 +859,31 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   /* DETAIL */
   #detail {
-    position:absolute; top:14px; right:14px; width:330px;
+    position:absolute; top:14px; right:56px; width:300px;
     background:var(--surface); border:1px solid var(--border2);
-    border-radius:12px; z-index:900; overflow:hidden;
-    box-shadow:0 24px 64px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.04);
+    border-radius:10px; z-index:900; overflow:hidden;
+    box-shadow:0 16px 48px rgba(0,0,0,0.72), 0 0 0 1px rgba(255,255,255,0.04);
     display:none; max-height:calc(100vh - 84px); overflow-y:auto;
   }
   #detail::-webkit-scrollbar { width:3px; }
   #detail::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); }
   #detail-accent { height:3px; width:100%; flex-shrink:0; }
-  #detail-header { padding:16px 18px 12px; border-bottom:1px solid var(--border); position:relative; }
-  #detail-tipo-chip { font-size:9px; text-transform:uppercase; letter-spacing:0.12em; font-weight:600; padding:2px 7px; border-radius:8px; display:inline-block; margin-bottom:7px; }
-  #detail-nombre { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; line-height:1.25; color:var(--cream); margin-bottom:5px; }
-  #detail-colectivo { font-size:10.5px; color:var(--amber); font-weight:500; line-height:1.4; cursor:pointer; text-decoration:underline dotted; }
-  #detail-close { position:absolute; top:12px; right:12px; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:5px; width:24px; height:24px; cursor:pointer; font-size:13px; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
+  #detail-header { padding:10px 12px 8px; border-bottom:1px solid var(--border); position:relative; }
+  #detail-tipo-chip { font-size:8px; text-transform:uppercase; letter-spacing:0.12em; font-weight:600; padding:1px 6px; border-radius:6px; display:inline-block; margin-bottom:5px; }
+  #detail-nombre { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:700; line-height:1.25; color:var(--cream); margin-bottom:3px; padding-right:54px; }
+  #detail-colectivo { font-size:9.5px; color:var(--amber); font-weight:500; line-height:1.4; cursor:pointer; text-decoration:underline dotted; }
+  #detail-close { position:absolute; top:8px; right:8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:5px; width:20px; height:20px; cursor:pointer; font-size:11px; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
   #detail-close:hover { background:rgba(255,255,255,0.1); color:var(--text); }
-  .det-section { padding:8px 14px; border-bottom:1px solid var(--border); }
+  .det-section { padding:6px 12px; border-bottom:1px solid var(--border); }
   .det-section:last-child { border-bottom:none; }
   .det-section-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
   .det-lbl { font-size:7.5px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:500; margin-bottom:3px; }
   .det-val { font-size:9.5px; color:var(--text); line-height:1.4; }
   .det-photo-wrap { position:relative; }
-  .det-photo { width:100%; height:170px; object-fit:cover; display:block; }
+  .det-photo { width:100%; height:140px; object-fit:cover; display:block; }
   .det-nota { font-style:italic; color:rgba(237,232,223,0.72); font-size:11px; line-height:1.65; border-left:2px solid var(--amber); padding-left:10px; }
   /* Edit mode */
-  #det-edit-btn { position:absolute; top:12px; right:44px; background:rgba(196,154,42,0.15); border:1px solid rgba(196,154,42,0.35); border-radius:5px; width:24px; height:24px; cursor:pointer; font-size:12px; color:var(--amber); display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
+  #det-edit-btn { position:absolute; top:8px; right:32px; background:rgba(196,154,42,0.15); border:1px solid rgba(196,154,42,0.35); border-radius:5px; width:20px; height:20px; cursor:pointer; font-size:10px; color:var(--amber); display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
   #det-edit-btn:hover { background:rgba(196,154,42,0.3); }
   .det-edit-input { width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(196,154,42,0.4); border-radius:4px; color:var(--cream); font-size:9.5px; padding:3px 6px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; margin-top:1px; }
   .det-edit-input:focus { border-color:var(--amber); background:rgba(196,154,42,0.08); }
@@ -1331,17 +1331,17 @@ function toggleEditMode(){
 
 function saveEventEdit(id){
   const edits = loadEdits();
-  const fields = ["nombre","fecha","lugar","comuna","descripcion","sentimiento"];
-  const patch = {};
-  fields.forEach(f=>{
+  const textFields = ["nombre","fecha","lugar","comuna","descripcion","sentimiento","marcoLabel","marcoNota","keywords"];
+  const patch = edits[id] || {};
+  textFields.forEach(f=>{
     const el = document.getElementById("det-edit-"+f);
-    if(el) patch[f] = el.value || el.textContent;
+    if(el) patch[f] = el.tagName==="SELECT" ? el.value : el.value;
   });
   edits[id] = patch;
   saveEdits(edits);
   editMode = false;
   const ev = eventos.find(e=>e.id===id);
-  if(ev) Object.assign(ev, patch);
+  if(ev){ const {marcoLabel,marcoNota,keywords,...evPatch}=patch; Object.assign(ev, evPatch); }
   renderList();
   select(id, true);
 }
@@ -1548,18 +1548,36 @@ function select(id, forceRefresh){
   const sc={satisfactorio:{bg:"rgba(42,158,114,0.15)",c:"#4DC9A0"},ambivalente:{bg:"rgba(196,154,42,0.15)",c:"#D4A842"},aflictivo:{bg:"rgba(200,98,42,0.15)",c:"#D98055"},identidad:{bg:"rgba(139,92,246,0.15)",c:"#A78BFA"},pertenencia:{bg:"rgba(59,130,246,0.15)",c:"#60A5FA"},ancestralidad:{bg:"rgba(196,78,123,0.15)",c:"#E879A0"},fracaso:{bg:"rgba(107,114,128,0.15)",c:"#9CA3AF"},exclusion:{bg:"rgba(200,42,42,0.15)",c:"#F87171"},rebeldía:{bg:"rgba(220,60,60,0.15)",c:"#F87171"}};
   const sentStyle=sc[(evd.sentimiento||"satisfactorio").toLowerCase()]||sc.satisfactorio;
   const marcoInfo=getMarcoTeorico(ev);
-  const marcoHTML=marcoInfo?`
+  const edits0=loadEdits(); const evOver=edits0[ev.id]||{};
+  const marcoNota = evOver.marcoNota !== undefined ? evOver.marcoNota : (marcoInfo ? marcoInfo.nota : "");
+  const marcoLabel = evOver.marcoLabel !== undefined ? evOver.marcoLabel : (marcoInfo ? marcoInfo.label : "");
+  const kwVal = evOver.keywords !== undefined ? evOver.keywords : (ev.keywords||[]).join(", ");
+
+  const marcoHTML = marcoInfo ? (editMode ? `
+    <div class="det-section">
+      <div class="det-lbl">Marco analítico — etiqueta</div>
+      <input id="det-edit-marcoLabel" class="det-edit-input" value="${marcoLabel.replace(/"/g,'&quot;')}">
+      <div class="det-lbl" style="margin-top:6px;">Nota analítica</div>
+      <textarea id="det-edit-marcoNota" class="det-edit-textarea" style="min-height:80px;font-style:normal;font-size:10px;">${marcoNota}</textarea>
+    </div>` : `
     <div class="det-section">
       <div class="det-lbl">Marco analítico</div>
-      <div style="margin-top:4px;padding:8px 12px;border-radius:8px;border-left:3px solid ${marcoInfo.color};background:${marcoInfo.color}18;font-size:10px;line-height:1.5;">
-        <span style="font-weight:700;color:${marcoInfo.color}">${marcoInfo.icon} ${marcoInfo.label}</span><br>
-        <span style="color:var(--muted2);font-style:italic">${marcoInfo.nota}</span>
+      <div style="margin-top:4px;padding:7px 10px;border-radius:8px;border-left:3px solid ${marcoInfo.color};background:${marcoInfo.color}18;font-size:10px;line-height:1.5;">
+        <span style="font-weight:700;color:${marcoInfo.color}">${marcoInfo.icon} ${marcoLabel}</span><br>
+        <span style="color:var(--muted2);font-style:italic">${marcoNota}</span>
       </div>
-    </div>`:"";
-  const kwHTML=(ev.keywords||[]).length?`
+    </div>`) : "";
+
+  const kwCurrent = evOver.keywords !== undefined ? evOver.keywords : (ev.keywords||[]).join(", ");
+  const kwDisplay = evOver.keywords !== undefined ? evOver.keywords.split(",").map(k=>k.trim()).filter(Boolean) : (ev.keywords||[]);
+  const kwHTML = (kwDisplay.length || editMode) ? (editMode ? `
     <div class="det-section">
-      <div class="det-keywords">${(ev.keywords||[]).map(k=>`<span class="kw">${k}</span>`).join("")}</div>
-    </div>`:"";
+      <div class="det-lbl">Palabras clave (separadas por coma)</div>
+      <input id="det-edit-keywords" class="det-edit-input" value="${kwCurrent.replace(/"/g,'&quot;')}">
+    </div>` : `
+    <div class="det-section">
+      <div class="det-keywords">${kwDisplay.map(k=>`<span class="kw">${k}</span>`).join("")}</div>
+    </div>`) : "";
 
   const sentOpts=Object.keys(sentLabels).map(k=>`<option value="${k}"${k===evd.sentimiento?"selected":""}>${sentLabels[k]}</option>`).join("");
 
