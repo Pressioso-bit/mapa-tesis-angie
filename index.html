@@ -917,7 +917,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* ── Leyenda ── */
   #leyenda {
     position: absolute;
-    bottom: 28px;
+    bottom: 74px;
     left: 10px;
     z-index: 1000;
     background: rgba(255,255,255,0.94);
@@ -1377,7 +1377,7 @@ let _clusterGroup = null;
 
 const map = L.map("map",{center:[-33.465,-70.62],zoom:12});
 
-const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{
+const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{
   attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:"abcd",maxZoom:19
 });
 const esri = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{
