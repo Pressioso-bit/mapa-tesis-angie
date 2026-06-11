@@ -1422,7 +1422,7 @@ function applyFilters(){
     yearSet.add(e.año);
   });
   const setEl=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
-  setEl("s-total",vis.length);
+  setEl("s-total",eventos.length);
   setEl("s-colectivos",colSet.size);
   setEl("s-years",yearSet.size);
   setEl("s-comunas",comunaSet.size);
@@ -1553,31 +1553,33 @@ function select(id, forceRefresh){
   const marcoLabel = evOver.marcoLabel !== undefined ? evOver.marcoLabel : (marcoInfo ? marcoInfo.label : "");
   const kwVal = evOver.keywords !== undefined ? evOver.keywords : (ev.keywords||[]).join(", ");
 
-  const marcoHTML = marcoInfo ? (editMode ? `
+  const marcoColor = marcoInfo ? marcoInfo.color : "#C49A2A";
+  const marcoIcon = marcoInfo ? marcoInfo.icon : "◉";
+  const marcoHTML = editMode ? `
     <div class="det-section">
       <div class="det-lbl">Marco analítico — etiqueta</div>
       <input id="det-edit-marcoLabel" class="det-edit-input" value="${marcoLabel.replace(/"/g,'&quot;')}">
       <div class="det-lbl" style="margin-top:6px;">Nota analítica</div>
       <textarea id="det-edit-marcoNota" class="det-edit-textarea" style="min-height:80px;font-style:normal;font-size:10px;">${marcoNota}</textarea>
-    </div>` : `
+    </div>` : (marcoInfo ? `
     <div class="det-section">
       <div class="det-lbl">Marco analítico</div>
-      <div style="margin-top:4px;padding:7px 10px;border-radius:8px;border-left:3px solid ${marcoInfo.color};background:${marcoInfo.color}18;font-size:10px;line-height:1.5;">
-        <span style="font-weight:700;color:${marcoInfo.color}">${marcoInfo.icon} ${marcoLabel}</span><br>
+      <div style="margin-top:4px;padding:7px 10px;border-radius:8px;border-left:3px solid ${marcoColor};background:${marcoColor}18;font-size:10px;line-height:1.5;">
+        <span style="font-weight:700;color:${marcoColor}">${marcoIcon} ${marcoLabel}</span><br>
         <span style="color:var(--muted2);font-style:italic">${marcoNota}</span>
       </div>
-    </div>`) : "";
+    </div>` : "");
 
   const kwCurrent = evOver.keywords !== undefined ? evOver.keywords : (ev.keywords||[]).join(", ");
   const kwDisplay = evOver.keywords !== undefined ? evOver.keywords.split(",").map(k=>k.trim()).filter(Boolean) : (ev.keywords||[]);
-  const kwHTML = (kwDisplay.length || editMode) ? (editMode ? `
+  const kwHTML = editMode ? `
     <div class="det-section">
       <div class="det-lbl">Palabras clave (separadas por coma)</div>
       <input id="det-edit-keywords" class="det-edit-input" value="${kwCurrent.replace(/"/g,'&quot;')}">
-    </div>` : `
+    </div>` : (kwDisplay.length ? `
     <div class="det-section">
       <div class="det-keywords">${kwDisplay.map(k=>`<span class="kw">${k}</span>`).join("")}</div>
-    </div>`) : "";
+    </div>` : "");
 
   const sentOpts=Object.keys(sentLabels).map(k=>`<option value="${k}"${k===evd.sentimiento?"selected":""}>${sentLabels[k]}</option>`).join("");
 
