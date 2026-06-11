@@ -1439,7 +1439,7 @@ function renderList(vis){
   if(!vis) vis=visible();
   const list=document.getElementById("ev-list");
   const cntEl=document.getElementById("list-count");
-  if(cntEl) cntEl.textContent=vis.length+" evento"+(vis.length!==1?"s":"");
+  if(cntEl) cntEl.textContent=eventos.length+" eventos"+(vis.length<eventos.length?" ("+vis.length+" visibles)":"");
   list.innerHTML="";
   if(!vis.length){list.innerHTML='<div style="padding:24px;text-align:center;color:var(--muted);font-size:11px">Sin resultados</div>';return;}
   const sc2={satisfactorio:{bg:"rgba(42,158,114,0.15)",c:"#4DC9A0"},ambivalente:{bg:"rgba(196,154,42,0.15)",c:"#D4A842"},aflictivo:{bg:"rgba(200,98,42,0.15)",c:"#D98055"},identidad:{bg:"rgba(139,92,246,0.15)",c:"#A78BFA"},pertenencia:{bg:"rgba(59,130,246,0.15)",c:"#60A5FA"},ancestralidad:{bg:"rgba(196,78,123,0.15)",c:"#E879A0"},fracaso:{bg:"rgba(107,114,128,0.15)",c:"#9CA3AF"},exclusion:{bg:"rgba(200,42,42,0.15)",c:"#F87171"}};

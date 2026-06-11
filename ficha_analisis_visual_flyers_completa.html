@@ -186,6 +186,43 @@
     font-size: 12px;
   }
 
+  /* Color por tipo de evento */
+  .tipo-festival   { --tipo-color: #C49A2A; --tipo-light: #FDF6E3; }
+  .tipo-juntanza   { --tipo-color: #2A9E72; --tipo-light: #E1F5EE; }
+  .tipo-asamblea   { --tipo-color: #7F77DD; --tipo-light: #EEEDFE; }
+  .tipo-taller     { --tipo-color: #4A9EBF; --tipo-light: #E4F4FA; }
+  .tipo-conversatorio { --tipo-color: #8B6FBF; --tipo-light: #F0EBF9; }
+  .tipo-conmem     { --tipo-color: #C44D7B; --tipo-light: #FCEEF4; }
+
+  .tipo-festival .ficha-cabecera,
+  .tipo-juntanza .ficha-cabecera,
+  .tipo-asamblea .ficha-cabecera,
+  .tipo-taller .ficha-cabecera,
+  .tipo-conversatorio .ficha-cabecera,
+  .tipo-conmem .ficha-cabecera {
+    border-top: 3px solid var(--tipo-color);
+    background: var(--tipo-light);
+  }
+
+  .tipo-festival .ficha-codigo,
+  .tipo-juntanza .ficha-codigo,
+  .tipo-asamblea .ficha-codigo,
+  .tipo-taller .ficha-codigo,
+  .tipo-conversatorio .ficha-codigo,
+  .tipo-conmem .ficha-codigo {
+    background: var(--tipo-color);
+    color: #fff;
+  }
+
+  .tipo-festival .campo-val,
+  .tipo-juntanza .campo-val,
+  .tipo-asamblea .campo-val,
+  .tipo-taller .campo-val,
+  .tipo-conversatorio .campo-val,
+  .tipo-conmem .campo-val {
+    border-left-color: var(--tipo-color);
+  }
+
   /* Editable fields */
   .campo-val[contenteditable],
   .ficha-titulo h2[contenteditable],
@@ -335,7 +372,7 @@
 <!-- ============================================================ -->
 <!-- FL-01 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-01">
+<div class="ficha-wrapper tipo-festival" id="FL-01">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-01</div>
     <div class="ficha-titulo">
@@ -445,7 +482,7 @@
 <!-- ============================================================ -->
 <!-- FL-02 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-02">
+<div class="ficha-wrapper tipo-festival" id="FL-02">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-02</div>
     <div class="ficha-titulo">
@@ -535,7 +572,7 @@
 <!-- ============================================================ -->
 <!-- FL-03 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-03">
+<div class="ficha-wrapper tipo-juntanza" id="FL-03">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-03</div>
     <div class="ficha-titulo">
@@ -624,7 +661,7 @@
 <!-- ============================================================ -->
 <!-- FL-04 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-04">
+<div class="ficha-wrapper tipo-asamblea" id="FL-04">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-04</div>
     <div class="ficha-titulo">
@@ -696,7 +733,7 @@
 <!-- ============================================================ -->
 <!-- FL-05 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-05">
+<div class="ficha-wrapper tipo-asamblea" id="FL-05">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-05</div>
     <div class="ficha-titulo">
@@ -762,7 +799,7 @@
 <!-- ============================================================ -->
 <!-- FL-06 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-06">
+<div class="ficha-wrapper tipo-taller" id="FL-06">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-06</div>
     <div class="ficha-titulo">
@@ -828,7 +865,7 @@
 <!-- ============================================================ -->
 <!-- FL-07 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-07">
+<div class="ficha-wrapper tipo-festival" id="FL-07">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-07</div>
     <div class="ficha-titulo">
@@ -895,7 +932,7 @@
 <!-- ============================================================ -->
 <!-- FL-08 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-08">
+<div class="ficha-wrapper tipo-taller" id="FL-08">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-08</div>
     <div class="ficha-titulo">
@@ -961,7 +998,7 @@
 <!-- ============================================================ -->
 <!-- FL-09 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-09">
+<div class="ficha-wrapper tipo-conmem" id="FL-09">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-09</div>
     <div class="ficha-titulo">
@@ -1031,7 +1068,7 @@
 <!-- ============================================================ -->
 <!-- FL-10 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-10">
+<div class="ficha-wrapper tipo-conmem" id="FL-10">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-10</div>
     <div class="ficha-titulo">
@@ -1097,7 +1134,7 @@
 <!-- ============================================================ -->
 <!-- FL-11 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-11">
+<div class="ficha-wrapper tipo-festival" id="FL-11">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-11</div>
     <div class="ficha-titulo">
@@ -1172,7 +1209,7 @@
 <!-- ============================================================ -->
 <!-- FL-12 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-12">
+<div class="ficha-wrapper tipo-conversatorio" id="FL-12">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-12</div>
     <div class="ficha-titulo">
@@ -1242,7 +1279,7 @@
 <!-- ============================================================ -->
 <!-- FL-13 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-13">
+<div class="ficha-wrapper tipo-conversatorio" id="FL-13">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-13</div>
     <div class="ficha-titulo">
@@ -1316,7 +1353,7 @@
 <!-- ============================================================ -->
 <!-- FL-14 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-14">
+<div class="ficha-wrapper tipo-asamblea" id="FL-14">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-14</div>
     <div class="ficha-titulo">
@@ -1408,7 +1445,7 @@
 <!-- ============================================================ -->
 <!-- FL-15 -->
 <!-- ============================================================ -->
-<div class="ficha-wrapper" id="FL-15">
+<div class="ficha-wrapper tipo-festival" id="FL-15">
   <div class="ficha-cabecera">
     <div class="ficha-codigo">FL-15</div>
     <div class="ficha-titulo">
