@@ -882,6 +882,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .det-photo-wrap { position:relative; }
   .det-photo { width:100%; height:170px; object-fit:cover; display:block; }
   .det-nota { font-style:italic; color:rgba(237,232,223,0.72); font-size:11px; line-height:1.65; border-left:2px solid var(--amber); padding-left:10px; }
+  /* Edit mode */
+  #det-edit-btn { position:absolute; top:12px; right:44px; background:rgba(196,154,42,0.15); border:1px solid rgba(196,154,42,0.35); border-radius:5px; width:24px; height:24px; cursor:pointer; font-size:12px; color:var(--amber); display:flex; align-items:center; justify-content:center; transition:all 0.12s; }
+  #det-edit-btn:hover { background:rgba(196,154,42,0.3); }
+  .det-edit-input { width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(196,154,42,0.4); border-radius:4px; color:var(--cream); font-size:9.5px; padding:3px 6px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; margin-top:1px; }
+  .det-edit-input:focus { border-color:var(--amber); background:rgba(196,154,42,0.08); }
+  .det-edit-textarea { width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(196,154,42,0.4); border-radius:4px; color:rgba(237,232,223,0.85); font-size:11px; padding:5px 8px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; resize:vertical; min-height:70px; margin-top:4px; font-style:italic; line-height:1.55; }
+  .det-edit-textarea:focus { border-color:var(--amber); background:rgba(196,154,42,0.06); }
+  .det-edit-select { width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(196,154,42,0.4); border-radius:4px; color:var(--cream); font-size:9.5px; padding:3px 6px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; margin-top:1px; cursor:pointer; }
+  .det-edit-select:focus { border-color:var(--amber); }
+  .det-save-btn { display:flex; align-items:center; gap:5px; padding:6px 14px; border-radius:7px; background:rgba(196,154,42,0.18); border:1px solid rgba(196,154,42,0.45); color:var(--amber); font-size:10px; font-weight:600; cursor:pointer; transition:background 0.15s; letter-spacing:0.04em; }
+  .det-save-btn:hover { background:rgba(196,154,42,0.3); }
   .det-sent-pill { display:inline-flex; align-items:center; gap:4px; font-size:10.5px; padding:3px 9px; border-radius:16px; font-weight:500; margin-top:2px; }
   .det-keywords { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
   .kw { font-size:8.5px; padding:2px 8px; border-radius:10px; background:var(--surface3); color:var(--muted2); border:1px solid var(--border2); }
@@ -1245,7 +1256,7 @@ const eventos = [
   { id:"JN-2022-1", nombre:"El Cuerpo de la Mujer Negra como Patrimonio", tipo:"juntanza", fecha:"29 may 2022", año:2022, lat:-33.4414, lng:-70.5907, lugar:"Campus Oriente PUC", comuna:"Providencia", colectivo:"Soyalmadenegra + Kilombo Negrocéntricxs", sentimiento:"satisfactorio", color:"#C8622A", descripcion:"Jornada en el Día de los Patrimonios 2022, Campus Oriente PUC. Organizada por Soyalmadenegra, Kilombo Negrocéntricxs, CIIR y Escuela de Arte UC. Incluyó el Laberinto Antirracista, stands de emprendimientos afro, talleres de conocimientos ancestrales y presentaciones artísticas.", keywords:["mujer","cuerpo","patrimonio","Día Patrimonios","resistencia"] },
   { id:"AN-2025", nombre:"Asamblea Nacional Afrodescendiente", tipo:"asamblea", fecha:"2025", año:2025, lat:-33.4421, lng:-70.6457, lugar:"Servicio Nacional del Patrimonio Cultural, Av. Bernardo O'Higgins 651", comuna:"Santiago Centro", colectivo:"Gestión Cultural Afro", sentimiento:"ambivalente", color:"#7F77DD", descripcion:"Asamblea de alcance nacional de organizaciones afrodescendientes chilenas. Debate sobre políticas públicas y participación política afro.", keywords:["nacional","políticas públicas","participación"] },
   { id:"KN-2021", nombre:"Asamblea General Negra", tipo:"asamblea", fecha:"29 abr 2021", año:2021, lat:-33.4488, lng:-70.6565, lugar:"Escuela Cadete Arturo Prat, San Ignacio 196, Metro Los Héroes", comuna:"Santiago Centro", colectivo:"Kilombo Negrocéntricxs", sentimiento:"ambivalente", color:"#7F77DD", descripcion:"Jornada de conversación sobre los derechos de las personas afrodescendientes. Convocada por Kilombo Negrocéntricxs, Kutosoma y Mujeres Afrodiaspóricas.", keywords:["asamblea","derechos","comunidad","Kilombo","Kutosoma"] },
-  { id:"TK-2022", nombre:"Taller: Amefricanidad y Memoria", tipo:"taller", fecha:"2022", año:2022, lat:-33.4247, lng:-70.8589, lugar:"Pudahuel, Santiago", comuna:"Pudahuel", colectivo:"Kilombo Negrocéntricxs", sentimiento:"satisfactorio", color:"#C49A2A", descripcion:"Taller de formación política y cultural basado en el concepto de Amefricanidad de Lélia Gonzalez. Exploración de memorias afrodiaspóricas en el contexto latinoamericano.", keywords:["Gonzalez","amefricanidad","memoria","formación"] },
+  { id:"TK-2022", nombre:"Taller: Amefricanidad y Memoria", tipo:"taller", fecha:"2022", año:2022, lat:-33.4300, lng:-70.6603, lugar:"Barnechea 320, Independencia", comuna:"Independencia", colectivo:"Kilombo Negrocéntricxs", sentimiento:"satisfactorio", color:"#C49A2A", descripcion:"Taller de formación política y cultural basado en el concepto de Amefricanidad de Lélia Gonzalez. Exploración de memorias afrodiaspóricas en el contexto latinoamericano.", keywords:["Gonzalez","amefricanidad","memoria","formación"] },
   { id:"KN-2023", nombre:"Afrorigen: Festival de Artes y Oficios Negros", tipo:"festival", fecha:"20 nov 2023", año:2023, lat:-33.4253, lng:-70.6514, lugar:"Laboratorio Ciudadano, La Paz 482", comuna:"Independencia", colectivo:"Kilombo Negrocéntricxs", sentimiento:"satisfactorio", color:"#2A9E72", descripcion:"Festival de cultura negrocéntrica en la periferia de Santiago. Feria de emprendedores afro, música, danza y actividades familiares.", keywords:["festival","negrocéntrico","emprendimiento","familia"] },
   { id:"TGA-2023", nombre:"Taller Gestión Cultural Afrodescendiente", tipo:"taller", fecha:"2023", año:2023, lat:-33.4418, lng:-70.651, lugar:"Centro Cultural Palacio La Moneda", comuna:"Santiago Centro", colectivo:"Soyalmadenegra", sentimiento:"satisfactorio", color:"#C49A2A", descripcion:"Taller de capacitación en gestión cultural con énfasis en patrimonio afrodescendiente.", keywords:["gestión","capacitación","patrimonio"] },
   { id:"SAA-2023", nombre:"Conmemoración 25J: Antirracismo", tipo:"conmemoracion", fecha:"25 jun 2023", año:2023, lat:-33.4374, lng:-70.6513, lugar:"Plaza de Armas", comuna:"Santiago Centro", colectivo:"Eritaj", sentimiento:"aflictivo", color:"#C44D7B", descripcion:"Acto público de conmemoración del Día Mundial de Lucha contra el Racismo. Lectura de manifiestos, intervención artística y marcha simbólica.", keywords:["25J","antirracismo","marcha","manifiesto","espacio público"] },
@@ -1299,6 +1310,41 @@ const sentColors={satisfactorio:"#2A7F5A",ambivalente:"#8B8B2A",aflictivo:"#7F2A
 const sentLabels={satisfactorio:"Satisfactorio",ambivalente:"Ambivalente",aflictivo:"Aflictivo",identidad:"Identidad",pertenencia:"Pertenencia",ancestralidad:"Ancestralidad",fracaso:"Fracaso",exclusion:"Exclusión"};
 const tipoLabels={juntanza:"Juntanza",asamblea:"Asamblea",feria:"Feria",taller:"Taller",conmemoracion:"Conmemoración",conversatorio:"Conversatorio",festival:"Festival",campana:"Campaña Digital"};
 const tipoSymbols={juntanza:"★",asamblea:"◆",feria:"●",taller:"▲",conmemoracion:"♦",conversatorio:"▼",festival:"◉",campana:"📢"};
+
+// ── Edit overrides (persisted per event in localStorage) ──
+const EDIT_KEY = "mapa_edits_v1";
+function loadEdits(){ try{ return JSON.parse(localStorage.getItem(EDIT_KEY)||"{}"); }catch(e){ return {}; } }
+function saveEdits(data){ localStorage.setItem(EDIT_KEY, JSON.stringify(data)); }
+function getEvData(ev){
+  const edits = loadEdits();
+  return Object.assign({}, ev, edits[ev.id]||{});
+}
+
+let editMode = false;
+
+function toggleEditMode(){
+  editMode = !editMode;
+  const btn = document.getElementById("det-edit-btn");
+  if(btn){ btn.style.background = editMode ? "rgba(196,154,42,0.4)" : "rgba(196,154,42,0.15)"; btn.title = editMode ? "Salir de edición" : "Editar viñetas"; }
+  if(activeId){ select(activeId, true); }
+}
+
+function saveEventEdit(id){
+  const edits = loadEdits();
+  const fields = ["nombre","fecha","lugar","comuna","descripcion","sentimiento"];
+  const patch = {};
+  fields.forEach(f=>{
+    const el = document.getElementById("det-edit-"+f);
+    if(el) patch[f] = el.value || el.textContent;
+  });
+  edits[id] = patch;
+  saveEdits(edits);
+  editMode = false;
+  const ev = eventos.find(e=>e.id===id);
+  if(ev) Object.assign(ev, patch);
+  renderList();
+  select(id, true);
+}
 
 function mkIcon(ev,active){
   const s=active?36:28, sym=tipoSymbols[ev.tipo]||"●";
@@ -1487,19 +1533,20 @@ function closeDetail(){
   renderList();
 }
 
-function select(id){
-  if(activeId===id){ closeDetail(); return; }
+function select(id, forceRefresh){
+  if(activeId===id && !forceRefresh){ closeDetail(); return; }
   activeId=id;
   const ev=eventos.find(e=>e.id===id);
   if(!ev) return;
+  const evd=getEvData(ev);
 
   // Update only icons (no cluster rebuild)
   updateIcons();
   renderList();
 
   // Build detail panel HTML (v1 approach)
-  const sc={satisfactorio:{bg:"rgba(42,158,114,0.15)",c:"#4DC9A0"},ambivalente:{bg:"rgba(196,154,42,0.15)",c:"#D4A842"},aflictivo:{bg:"rgba(200,98,42,0.15)",c:"#D98055"},identidad:{bg:"rgba(139,92,246,0.15)",c:"#A78BFA"},pertenencia:{bg:"rgba(59,130,246,0.15)",c:"#60A5FA"},ancestralidad:{bg:"rgba(196,78,123,0.15)",c:"#E879A0"},fracaso:{bg:"rgba(107,114,128,0.15)",c:"#9CA3AF"},exclusion:{bg:"rgba(200,42,42,0.15)",c:"#F87171"}};
-  const sentStyle=sc[(ev.sentimiento||"satisfactorio").toLowerCase()]||sc.satisfactorio;
+  const sc={satisfactorio:{bg:"rgba(42,158,114,0.15)",c:"#4DC9A0"},ambivalente:{bg:"rgba(196,154,42,0.15)",c:"#D4A842"},aflictivo:{bg:"rgba(200,98,42,0.15)",c:"#D98055"},identidad:{bg:"rgba(139,92,246,0.15)",c:"#A78BFA"},pertenencia:{bg:"rgba(59,130,246,0.15)",c:"#60A5FA"},ancestralidad:{bg:"rgba(196,78,123,0.15)",c:"#E879A0"},fracaso:{bg:"rgba(107,114,128,0.15)",c:"#9CA3AF"},exclusion:{bg:"rgba(200,42,42,0.15)",c:"#F87171"},rebeldía:{bg:"rgba(220,60,60,0.15)",c:"#F87171"}};
+  const sentStyle=sc[(evd.sentimiento||"satisfactorio").toLowerCase()]||sc.satisfactorio;
   const marcoInfo=getMarcoTeorico(ev);
   const marcoHTML=marcoInfo?`
     <div class="det-section">
@@ -1514,40 +1561,82 @@ function select(id){
       <div class="det-keywords">${(ev.keywords||[]).map(k=>`<span class="kw">${k}</span>`).join("")}</div>
     </div>`:"";
 
+  const sentOpts=Object.keys(sentLabels).map(k=>`<option value="${k}"${k===evd.sentimiento?"selected":""}>${sentLabels[k]}</option>`).join("");
+
+  // viñetas grid: view vs edit
+  const vinGrid = editMode ? `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
+      <div style="padding:7px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div class="det-lbl">Fecha</div>
+        <input id="det-edit-fecha" class="det-edit-input" value="${evd.fecha}">
+      </div>
+      <div style="padding:7px 14px;border-bottom:1px solid var(--border);">
+        <div class="det-lbl">Sentimiento</div>
+        <select id="det-edit-sentimiento" class="det-edit-select">${sentOpts}</select>
+      </div>
+      <div style="padding:7px 14px;border-right:1px solid var(--border);">
+        <div class="det-lbl">Lugar</div>
+        <input id="det-edit-lugar" class="det-edit-input" value="${evd.lugar}">
+      </div>
+      <div style="padding:7px 14px;">
+        <div class="det-lbl">Comuna</div>
+        <input id="det-edit-comuna" class="det-edit-input" value="${evd.comuna}">
+      </div>
+    </div>` : `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
+      <div style="padding:7px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div class="det-lbl">Fecha</div><div style="font-size:10.5px;color:var(--text);line-height:1.4;">${evd.fecha}</div>
+      </div>
+      <div style="padding:7px 14px;border-bottom:1px solid var(--border);">
+        <div class="det-lbl">Sentimiento</div>
+        <div style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 7px;border-radius:12px;margin-top:1px;background:${sentStyle.bg};color:${sentStyle.c};">
+          <span style="width:5px;height:5px;border-radius:50%;background:${sentStyle.c};display:inline-block;"></span>${sentLabels[evd.sentimiento]||evd.sentimiento||"—"}
+        </div>
+      </div>
+      <div style="padding:7px 14px;border-right:1px solid var(--border);">
+        <div class="det-lbl">Lugar</div><div style="font-size:10px;color:var(--text);line-height:1.35;">${evd.lugar}</div>
+      </div>
+      <div style="padding:7px 14px;">
+        <div class="det-lbl">Comuna</div><div style="font-size:10.5px;color:var(--text);line-height:1.4;">${evd.comuna}</div>
+      </div>
+    </div>`;
+
+  const descSection = editMode ? `
+    <div class="det-section">
+      <div class="det-lbl">Descripción</div>
+      <textarea id="det-edit-descripcion" class="det-edit-textarea">${evd.descripcion}</textarea>
+    </div>
+    <div class="det-section" style="border-bottom:none;padding-bottom:12px;">
+      <button class="det-save-btn" onclick="saveEventEdit('${ev.id}')">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Guardar cambios
+      </button>
+    </div>` : `
+    <div class="det-section">
+      <div class="det-lbl">Descripción</div>
+      <div class="det-nota">${evd.descripcion}</div>
+    </div>`;
+
+  const nombreField = editMode
+    ? `<input id="det-edit-nombre" class="det-edit-input" value="${evd.nombre}" style="font-size:14px;font-weight:600;width:calc(100% - 60px);">`
+    : `<div id="detail-nombre">${evd.nombre}</div>`;
+
   const det=document.getElementById("detail");
   det.innerHTML=`
     <div id="detail-accent" style="background:${ev.color};height:3px;"></div>
     <div id="detail-header">
       <div id="detail-tipo-chip" style="background:${ev.color}22;color:${ev.color};border:1px solid ${ev.color}44">${tipoSymbols[ev.tipo]} ${tipoLabels[ev.tipo].toUpperCase()}</div>
-      <div id="detail-nombre">${ev.nombre}</div>
+      ${nombreField}
       <div id="detail-colectivo" onclick="openColPanel('${ev.colectivo.replace(/'/g,"&#39;")}')">${ev.colectivo}</div>
+      <button id="det-edit-btn" onclick="toggleEditMode()" title="${editMode?'Salir de edición':'Editar viñetas'}" style="background:${editMode?'rgba(196,154,42,0.4)':'rgba(196,154,42,0.15)'}">✏</button>
       <button id="detail-close" onclick="closeDetail()">✕</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
-      <div style="padding:7px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);">
-        <div class="det-lbl">Fecha</div><div style="font-size:10.5px;color:var(--text);line-height:1.4;">${ev.fecha}</div>
-      </div>
-      <div style="padding:7px 14px;border-bottom:1px solid var(--border);">
-        <div class="det-lbl">Sentimiento</div>
-        <div style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 7px;border-radius:12px;margin-top:1px;background:${sentStyle.bg};color:${sentStyle.c};">
-          <span style="width:5px;height:5px;border-radius:50%;background:${sentStyle.c};display:inline-block;"></span>${sentLabels[ev.sentimiento]||ev.sentimiento||"—"}
-        </div>
-      </div>
-      <div style="padding:7px 14px;border-right:1px solid var(--border);">
-        <div class="det-lbl">Lugar</div><div style="font-size:10px;color:var(--text);line-height:1.35;">${ev.lugar}</div>
-      </div>
-      <div style="padding:7px 14px;">
-        <div class="det-lbl">Comuna</div><div style="font-size:10.5px;color:var(--text);line-height:1.4;">${ev.comuna}</div>
-      </div>
-    </div>
+    ${vinGrid}
     <div class="det-photo-wrap">
-      <img class="det-photo" src="${getImg(ev)}" alt="${ev.nombre}">
+      <img class="det-photo" src="${getImg(ev)}" alt="${evd.nombre}">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(17,17,17,0.6) 100%);pointer-events:none;"></div>
     </div>
-    <div class="det-section">
-      <div class="det-lbl">Descripción</div>
-      <div class="det-nota">${ev.descripcion}</div>
-    </div>
+    ${descSection}
     ${marcoHTML}
     ${kwHTML}
     ${fichaLinks[ev.id]?`<div class="det-section" style="border-bottom:none;padding-bottom:14px;">
