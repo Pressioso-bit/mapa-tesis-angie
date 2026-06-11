@@ -914,6 +914,79 @@ svg.leaflet-image-layer.leaflet-interactive path {
   @keyframes ripple-expand { 0%{transform:translate(-50%,-50%) scale(0);opacity:0.7;} 100%{transform:translate(-50%,-50%) scale(1);opacity:0;} }
   .marker-ripple { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,0.9); pointer-events:none; animation:ripple-expand 0.7s ease-out forwards; z-index:9999; }
 
+  /* ── Leyenda ── */
+  #leyenda {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
+    z-index: 1000;
+    background: rgba(18,18,20,0.92);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 170px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    font-family: inherit;
+  }
+  #leyenda-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px 7px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    cursor: default;
+  }
+  #leyenda-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(237,232,223,0.7);
+  }
+  #leyenda-toggle {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(237,232,223,0.8);
+    border-radius: 4px;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s;
+  }
+  #leyenda-toggle:hover { background: rgba(255,255,255,0.1); }
+  #leyenda-body { padding: 8px 12px 10px; }
+  #leyenda-body.hidden { display: none; }
+  .ley-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: rgba(237,232,223,0.85);
+  }
+  .ley-item:last-child { margin-bottom: 0; }
+  .ley-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    font-weight: 700;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.35);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+
   /* ── Timeline ── */
   #timeline-bar {
     position:absolute; bottom:0; left:0; right:0; height:64px;
@@ -1174,6 +1247,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div class="col-panel-evs" id="col-panel-evs"></div>
       </div>
       <div id="detail"></div>
+
+      <!-- ── Leyenda plegable ── -->
+      <div id="leyenda">
+        <div id="leyenda-header">
+          <span id="leyenda-title">Tipos de evento</span>
+          <button id="leyenda-toggle" title="Mostrar/ocultar leyenda">−</button>
+        </div>
+        <div id="leyenda-body"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1296,7 +1378,7 @@ let _clusterGroup = null;
 
 const map = L.map("map",{center:[-33.465,-70.62],zoom:12});
 
-const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{
+const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png",{
   attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:"abcd",maxZoom:19
 });
 const esri = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{
@@ -1353,7 +1435,7 @@ function mkIcon(ev,active){
     :`0 0 0 3px rgba(0,0,0,0.4),0 4px 12px rgba(0,0,0,0.45)`;
   return L.divIcon({
     className:"",
-    html:`<div style="width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;border:2px solid rgba(255,255,255,${active?0.35:0.18});box-shadow:${glow};display:flex;align-items:center;justify-content:center;font-size:${active?14:10}px;color:#fff;font-weight:700;cursor:pointer;">${sym}</div>`,
+    html:`<div style="width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;border:${active?3:2.5}px solid rgba(255,255,255,${active?0.95:0.72});box-shadow:${glow};display:flex;align-items:center;justify-content:center;font-size:${active?14:10}px;color:#fff;font-weight:700;cursor:pointer;">${sym}</div>`,
     iconSize:[s,s],
     iconAnchor:[s/2,s/2]
   });
@@ -1870,6 +1952,37 @@ if(new URLSearchParams(location.search).has("presentacion")){
   document.getElementById("sidebar").style.width="220px";
   document.getElementById("sidebar").style.minWidth="220px";
 }
+
+// ── Leyenda plegable ─────────────────────────────────
+(function(){
+  const tipoColors = {
+    festival:"#C49A2A", juntanza:"#2A9E72", asamblea:"#7F77DD",
+    taller:"#4A9EBF", conversatorio:"#8B6FBF",
+    conmemoracion:"#C44D7B", campana:"#C44D7B"
+  };
+  const body = document.getElementById("leyenda-body");
+  const toggle = document.getElementById("leyenda-toggle");
+  let open = true;
+
+  // Build items — only tipos that have events in the corpus
+  const usedTipos = [...new Set(eventos.map(e=>e.tipo))];
+  const order = ["festival","juntanza","asamblea","taller","conversatorio","conmemoracion","campana"];
+  order.filter(t=>usedTipos.includes(t)).forEach(tipo=>{
+    const color = tipoColors[tipo]||"#888";
+    const sym   = tipoSymbols[tipo]||"●";
+    const label = tipoLabels[tipo]||tipo;
+    const item  = document.createElement("div");
+    item.className = "ley-item";
+    item.innerHTML = `<div class="ley-dot" style="background:${color};">${sym}</div><span>${label}</span>`;
+    body.appendChild(item);
+  });
+
+  toggle.addEventListener("click", ()=>{
+    open = !open;
+    body.classList.toggle("hidden", !open);
+    toggle.textContent = open ? "−" : "+";
+  });
+})();
 
 // ── Fit all markers on load ───────────────────────────
 setTimeout(()=>{
