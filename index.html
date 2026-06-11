@@ -907,9 +907,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .kw { font-size:8.5px; padding:2px 8px; border-radius:10px; background:var(--surface3); color:var(--muted2); border:1px solid var(--border2); }
   #det-close { position:absolute; top:8px; right:8px; width:24px; height:24px; border-radius:50%; background:rgba(0,0,0,0.6); border:none; color:#fff; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:10; }
 
-  .leaflet-control-attribution { background:rgba(10,10,10,0.8) !important; color:rgba(237,232,223,0.4) !important; font-size:9px !important; }
-  .leaflet-control-attribution a { color:rgba(196,154,42,0.6) !important; }
-  .leaflet-control-zoom a { background:var(--surface2) !important; color:var(--text) !important; border-color:var(--border2) !important; }
+  .leaflet-control-attribution { background:rgba(255,255,255,0.82) !important; color:rgba(0,0,0,0.45) !important; font-size:9px !important; }
+  .leaflet-control-attribution a { color:rgba(0,0,0,0.5) !important; }
+  .leaflet-control-zoom a { background:rgba(255,255,255,0.94) !important; color:#333 !important; border-color:rgba(0,0,0,0.18) !important; }
 
   @keyframes ripple-expand { 0%{transform:translate(-50%,-50%) scale(0);opacity:0.7;} 100%{transform:translate(-50%,-50%) scale(1);opacity:0;} }
   .marker-ripple { position:absolute; border-radius:50%; border:2px solid rgba(255,255,255,0.9); pointer-events:none; animation:ripple-expand 0.7s ease-out forwards; z-index:9999; }
@@ -917,41 +917,39 @@ svg.leaflet-image-layer.leaflet-interactive path {
   /* ── Leyenda ── */
   #leyenda {
     position: absolute;
-    bottom: 30px;
+    bottom: 28px;
     left: 10px;
     z-index: 1000;
-    background: rgba(18,18,20,0.92);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
+    background: rgba(255,255,255,0.94);
+    border: 1px solid rgba(0,0,0,0.13);
+    border-radius: 8px;
     overflow: hidden;
-    min-width: 170px;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     font-family: inherit;
   }
   #leyenda-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 7px 10px 7px 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    cursor: default;
+    gap: 12px;
+    padding: 5px 7px 5px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
   }
   #leyenda-title {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: rgba(237,232,223,0.7);
+    color: #555;
   }
   #leyenda-toggle {
     background: none;
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(237,232,223,0.8);
-    border-radius: 4px;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
+    border: 1px solid rgba(0,0,0,0.18);
+    color: #444;
+    border-radius: 3px;
+    width: 16px;
+    height: 16px;
+    font-size: 13px;
     line-height: 1;
     cursor: pointer;
     display: flex;
@@ -959,32 +957,33 @@ svg.leaflet-image-layer.leaflet-interactive path {
     justify-content: center;
     padding: 0;
     transition: background 0.15s;
+    flex-shrink: 0;
   }
-  #leyenda-toggle:hover { background: rgba(255,255,255,0.1); }
-  #leyenda-body { padding: 8px 12px 10px; }
+  #leyenda-toggle:hover { background: rgba(0,0,0,0.07); }
+  #leyenda-body { padding: 6px 10px 7px; }
   #leyenda-body.hidden { display: none; }
   .ley-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 6px;
-    font-size: 11px;
-    color: rgba(237,232,223,0.85);
+    gap: 6px;
+    margin-bottom: 4px;
+    font-size: 10.5px;
+    color: #333;
   }
   .ley-item:last-child { margin-bottom: 0; }
   .ley-dot {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 8px;
     color: #fff;
     font-weight: 700;
     flex-shrink: 0;
-    border: 2px solid rgba(255,255,255,0.35);
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+    border: 1.5px solid rgba(0,0,0,0.45);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
   }
 
   /* ── Timeline ── */
@@ -1378,10 +1377,10 @@ let _clusterGroup = null;
 
 const map = L.map("map",{center:[-33.465,-70.62],zoom:12});
 
-const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png",{
+const carto = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{
   attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:"abcd",maxZoom:19
 });
-const esri = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",{
+const esri = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{
   attribution:'&copy; Esri',maxZoom:16
 });
 carto.addTo(map);
@@ -1431,11 +1430,11 @@ function saveEventEdit(id){
 function mkIcon(ev,active){
   const s=active?36:28, sym=tipoSymbols[ev.tipo]||"●";
   const glow=active
-    ?`0 0 0 5px rgba(0,0,0,0.35),0 0 22px ${ev.color}99,0 4px 16px rgba(0,0,0,0.6)`
-    :`0 0 0 3px rgba(0,0,0,0.4),0 4px 12px rgba(0,0,0,0.45)`;
+    ?`0 2px 0 1px rgba(0,0,0,0.55),0 4px 14px rgba(0,0,0,0.3)`
+    :`0 1px 0 1px rgba(0,0,0,0.35),0 2px 8px rgba(0,0,0,0.2)`;
   return L.divIcon({
     className:"",
-    html:`<div style="width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;border:${active?3:2.5}px solid rgba(255,255,255,${active?0.95:0.72});box-shadow:${glow};display:flex;align-items:center;justify-content:center;font-size:${active?14:10}px;color:#fff;font-weight:700;cursor:pointer;">${sym}</div>`,
+    html:`<div style="width:${s}px;height:${s}px;background:${ev.color};border-radius:50%;border:${active?3:2}px solid rgba(0,0,0,${active?0.75:0.55});box-shadow:${glow};display:flex;align-items:center;justify-content:center;font-size:${active?14:10}px;color:#fff;font-weight:700;cursor:pointer;">${sym}</div>`,
     iconSize:[s,s],
     iconAnchor:[s/2,s/2]
   });
