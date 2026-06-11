@@ -825,6 +825,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .chip[data-sent="ancestralidad"].on { background:#7A5A2A; }
   .chip[data-sent="fracaso"].on       { background:#5A2A5A; }
   .chip[data-sent="exclusion"].on     { background:#8B2A2A; }
+  .chip[data-sent="rebeldía"].on      { background:#C44D7B; }
   .chip[data-col].on { background:var(--amber); color:#000; border-color:var(--amber); }
   #search-wrap { position:relative; margin-top:8px; }
   #search-wrap svg { position:absolute; left:8px; top:50%; transform:translateY(-50%); width:12px; height:12px; color:var(--muted); }
@@ -1192,6 +1193,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <span class="chip on" data-sent="ancestralidad">Ancestralidad</span>
           <span class="chip on" data-sent="fracaso">Fracaso</span>
           <span class="chip on" data-sent="exclusion">Exclusión</span>
+          <span class="chip on" data-sent="rebeldía">Rebeldía</span>
         </div>
         <div class="filter-label">Colectivo</div>
         <div class="filter-row">
@@ -1369,7 +1371,7 @@ const evImgs = {
 function getImg(ev){ return evImgs[ev.id]||IMGS.campo3 }
 
 let activeTipos = new Set(["juntanza","asamblea","feria","taller","conmemoracion","conversatorio","festival","campana"]);
-let activeSents = new Set(["satisfactorio","ambivalente","aflictivo","identidad","pertenencia","ancestralidad","fracaso","exclusion"]);
+let activeSents = new Set(["satisfactorio","ambivalente","aflictivo","identidad","pertenencia","ancestralidad","fracaso","exclusion","rebeldía"]);
 let activeColectivos = new Set(["Soyalmadenegra","Kilombo Negrocéntricxs","Eritaj","Gestión Cultural Afro"]);
 let activeYear = "all", searchQ = "", activeId = null;
 let markers = []; // [{id, layer, ev}]
